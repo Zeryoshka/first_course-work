@@ -1,0 +1,69 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.siteName {
+    text-align: center;
+}
+
+.container {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 0 5em;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    height: 100%;
+}
+
+.lots {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    border: 1.5px #000 solid;
+    border-radius: 1rem;
+    padding: 0.5rem;
+}
+
+.lot {
+    box-sizing: border-box;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    border-bottom: 1px black solid;
+    padding: 0.1rem 1rem;
+}
+
+.lot__number {
+    width: 5rem;
+}
+.lot__name {
+    width: 75rem;
+}
+.lot__team {
+    width: 30em;
+}
+.lot__price {
+    width: 7em;
+}
+
+.current-lot {
+    width: 30%;
+    border: 1.5px black solid;
+    border-radius: 1rem;
+    padding: 0.5rem;
+    text-align: center;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.current-lot__timer {
+    border: 1.5px black solid;
+    border-radius: 2px;
+    padding: 0.2rem;
+    margin: 1rem 0 0.5rem;
+    width: 1em;
+}
