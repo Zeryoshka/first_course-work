@@ -8,17 +8,19 @@ from app import app
 def notFoundPage(error):
     return '<h1 align="center">Страница не найдена</h1>'
 
+
 @app.route('/')
 @app.route('/index')
 def index():
 	return render_template('lobby/lobby.html')
 
+
 @app.route('/registration', methods=['GET','POST'])
 def register_req():
 	if request.method == 'GET':
 		return render_template('registration/registration.html')
-	# elif request.method == 'POST':
-		# db.registration_user('admin', 'admin');
+	elif request.method == 'POST':
+		return render_template('registration/registration.html')
 
 
 @app.route('/authorization')
