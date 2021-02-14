@@ -1,19 +1,30 @@
+from flask import render_template
+
 from app import app
+
+
+@app.errorhandler(404)
+def notFoundPage(error):
+    return '<h1 align="center">Страница не найдена</h1>'
 
 @app.route('/')
 @app.route('/index')
 def index():
-	return "Тут будет лобби"
+	return render_template('lobby/lobby.html')
 
-
-@app.route('/register')
+@app.route('/registration', methods=['GET','POST'])
 def register_req():
-	return "А тут регистрация"
+	if request.method == 'GET':
+		return render_template('registration/registration.html')
+	# elif request.method == 'POST':
+		# db.registration_user('admin', 'admin');
 
 
 @app.route('/authorization')
 def authorization_req():
-	return "А тут регистрация"
+	return render_template('authorization/authorization.html')
+
+
 
 
 @app.route('/auction')
