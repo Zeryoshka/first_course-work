@@ -1,0 +1,43 @@
+html {
+    font-size: 20px;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.games {
+    display: flex;
+    flex-direction: column;
+    width: 70%;
+}
+
+.game {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 3rem;
+    border: black solid 2px;
+    border-radius: 1rem;
+    align-items: center;
+    padding: 5px;
+}
+
+.game__id {
+    display: flex;
+    width: 25%;
+}
+
+.game__admin {
+    display: flex;
+    width: 50%;
+}
+
+.game__users-count {
+    display: flex;
+    width: 25%;
+}
