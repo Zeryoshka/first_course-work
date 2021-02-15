@@ -1,3 +1,5 @@
+from app.game_module.player import Player
+
 NONE_STATE = 0
 WATITNG_FOR_PLAYER = 1
 PREPARING_FOR_GAME = 2
