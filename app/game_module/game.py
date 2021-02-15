@@ -42,6 +42,7 @@ class Game():
 		return self._state == RESAULTS
 
 	def addPlayer(self, userSession):
+		self.delPlayersWithDiedSession()
 		assert(self.is_waiting_for_player())
 		assert(len(self._players) < self.needPlayersCount)
 		self._players.append(Player(userSession))
@@ -53,6 +54,11 @@ class Game():
 				return False
 		return True
 	
+	def delPlayersWithDiedSession(self):
+		for i, player in enumerate(self._players):
+			if not player.userSession.isActive():
+				del self._players[i]
+
 	def state_to_preparing_for_game(self):
 		if self.is_waiting_for_player() and self.needPlayersCount == len(self._players):
 			self._state = PREPARING_FOR_GAME
