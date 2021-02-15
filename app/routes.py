@@ -5,8 +5,8 @@ from flask import redirect, url_for
 
 
 from app import app
-from app import userSessions
-from app import users
+from app import userSessions, users
+from app import game
 
 @app.errorhandler(404)
 def notFoundPage(error):
@@ -17,7 +17,15 @@ def notFoundPage(error):
 @app.route('/index')
 def index_req():
 	if checkToken(session):
-		return "Вы успешно авторизованы, игра скоро начнется" # render_tempates('game-wait.html')
+		userSession = userSessions.getSessionByToken(session['user_token'])
+		if game.is_waiting_for_player():
+			if game.userNotAddToGame(userSession):
+				game.addPlayer(userSession)
+				return "Вы успешно авторизованы и добавлены к игре, игра скоро начнется" # В этом месте будет шаблон странички с ожиданием и скрипт, который будет спрашивать это
+			else:
+				return "Вы успешно авторизованы и добавлены к игре, игра скоро начнется. Ваш ник {0}".format(userSession.user.name) # Тут тоже
+		else:
+			return "Тут типо будет обратный отсчет" # render_tempates('game-wait.html')
 	else:
 		return redirect(url_for('registration_req'))
 

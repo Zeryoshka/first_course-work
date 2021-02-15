@@ -1,7 +1,7 @@
 from os import urandom
 from datetime import datetime, timedelta
 
-_maxTimeWithoutActive = 100000
+_maxTimeWithoutActive = 1
 
 def _createToken():
     return urandom(20).hex()

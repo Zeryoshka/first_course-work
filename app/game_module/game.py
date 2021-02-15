@@ -19,8 +19,8 @@ states:
 class Game():
 	
 	def __init__(self):
-		self._state = NONE_STATE
-		self.needPlayersCount = 4
+		self._state = WATITNG_FOR_PLAYER
+		self.needPlayersCount = 2
 		self._players = []
 	
 	def is_none_state(self):
@@ -41,10 +41,17 @@ class Game():
 	def is_resaults(self):
 		return self._state == RESAULTS
 
-	def addPlayer(self, user, userSession):
+	def addPlayer(self, userSession):
 		assert(self.is_waiting_for_player())
-		assert(self.needPlayersCount < len(self._players))
-		self._players.append(Player(user, userSession))
+		assert(len(self._players) < self.needPlayersCount)
+		self._players.append(Player(userSession))
+		self.state_to_preparing_for_game()
+	
+	def userNotAddToGame(self, userSession):
+		for player in self._players:
+			if player.userSession == userSession:
+				return False
+		return True
 	
 	def state_to_preparing_for_game(self):
 		if self.is_waiting_for_player() and self.needPlayersCount == len(self._players):
