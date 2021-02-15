@@ -17,7 +17,7 @@ def notFoundPage(error):
 @app.route('/index')
 def index_req():
 	if checkToken(session):
-		return "Вы успешно авторизованы, игра скоро начнется"
+		return "Вы успешно авторизованы, игра скоро начнется" # render_tempates('game-wait.html')
 	else:
 		return redirect(url_for('registration_req'))
 
