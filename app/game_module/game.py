@@ -1,21 +1,8 @@
 from app.game_module.player import Player
 
-NONE_STATE = 0
-WATITNG_FOR_PLAYER = 1
-PREPARING_FOR_GAME = 2
-AUCTION = 3
-EMULATION = 4
-RESAULTS = 5
+from app.config_module.base_config import NONE_STATE, WATITNG_FOR_PLAYER, PREPARING_FOR_GAME, \
+	AUCTION, EMULATION, RESAULTS
 
-"""
-states:
-	0 - none_state
-	1 - waiting for player
-	2 - preparing for game
-	3 - auction
-	4 - emulation 
-	5 - resaults
-"""
 class Game():
 	
 	def __init__(self):
