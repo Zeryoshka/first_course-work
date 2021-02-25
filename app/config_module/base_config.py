@@ -9,3 +9,7 @@ PREPARING_FOR_GAME = 2 # Подготовка к игре
 AUCTION = 3 # Аукцион
 EMULATION = 4 # Эмуляция
 RESAULTS = 5 # Результаты
+
+#Папки
+STATIC_FOLDER = 'static' # Папка со статическими файлам
+TEMPLATE_FOLDER = 'templates'

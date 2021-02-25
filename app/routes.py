@@ -10,7 +10,7 @@ from app import game
 
 @app.errorhandler(404)
 def notFoundPage(error):
-    return '<h1 align="center">Страница не найдена</h1>'
+    return render_template('error404_template.html')
 
 
 @app.route('/')
