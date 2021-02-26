@@ -18,16 +18,48 @@ def notFoundPage(error):
 def index_req():
 	if checkToken(session):
 		userSession = userSessions.getSessionByToken(session['user_token'])
-		if game.is_waiting_for_player():
-			if game.userNotAddToGame(userSession):
-				game.addPlayer(userSession)
-				return "Вы успешно авторизованы и добавлены к игре, игра скоро начнется" # В этом месте будет шаблон странички с ожиданием и скрипт, который будет спрашивать это
-			else:
-				return "Вы успешно авторизованы и добавлены к игре, игра скоро начнется. Ваш ник {0}".format(userSession.user.name) # Тут тоже
-		else:
-			return "Тут типо будет обратный отсчет" # render_tempates('game-wait.html')
-	else:
-		return redirect(url_for('registration_req'))
+		if not game.userAddedToGame(userSession):
+			game.addPlayer(userSession)
+			return redirect(url_for('game_user_waiting_req'))
+		# return "Вы успешно авторизованы и добавлены к игре, игра скоро начнется. Ваш ник {0}".format(userSession.user.name) # Тут тоже
+		# return "Тут типо будет обратный отсчет" # render_tempates('game-wait.html')
+	return redirect(url_for('registration_req'))
+
+@app.route('/game')
+def game_req():
+	if checkToken(session):
+		userSession = userSessions.getSessionByToken(session['user_token'])
+		if game.userAddedToGame(userSession):
+			if game.is_waiting_for_player():
+				return redirect(url_for('game_user_waiting_req'))
+			if game.is_preparing_for_game():
+				return redirect(url_for('game_preparing_req'))
+			if game.is_auction():
+				return redirect(url_for('game_user_waiting_req'))
+			if game.is_emulation():
+				return redirect(url_for('game_emaulation_req'))
+			if game.is_resaults():
+				return redirect(url_for('game_resaults_req'))
+			return "NONE_STATE (Мы пока не знаем, как так получилось)"
+	return redirect(url_for('index_req'))
+
+
+@app.route('/game/user_waiting')
+def game_user_waiting_req():
+	if not checkToken(session):
+		return redirect(url_for('index_req'))
+	userSession = userSessions.getSessionByToken(session['user_token'])
+	if not game.userAddedToGame(userSession):
+		return redirect(url_for('index_req'))
+	if not game.is_waiting_for_player():
+		return redirect(url_for('game_req'))
+	param = {
+		'current_players_count': game.get_players_count(),
+		'need_players_count': game.needPlayersCount,
+		'user_name': userSession.user.name
+	}
+	return render_template('user-waiting_template.html', **param)
+
 
 @app.route('/authorization')
 def authorization_req():

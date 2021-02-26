@@ -35,11 +35,11 @@ class Game():
 		self._players.append(Player(userSession))
 		self.state_to_preparing_for_game()
 	
-	def userNotAddToGame(self, userSession):
+	def userAddedToGame(self, userSession):
 		for player in self._players:
 			if player.userSession == userSession:
-				return False
-		return True
+				return True
+		return False
 	
 	def delPlayersWithDiedSession(self):
 		for i, player in enumerate(self._players):
@@ -51,4 +51,6 @@ class Game():
 			self._state = PREPARING_FOR_GAME
 			return True
 		return False
+	def get_players_count(self):
+		return len(self._players)
 
