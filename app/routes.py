@@ -2,7 +2,9 @@ from flask import render_template
 from flask import request
 from flask import session
 from flask import redirect, url_for
+from flask import jsonify
 
+import json
 
 from app import app
 from app import userSessions, users
@@ -11,7 +13,6 @@ from app import game
 @app.errorhandler(404)
 def notFoundPage(error):
     return render_template('error404_template.html')
-
 
 @app.route('/')
 @app.route('/index')
@@ -23,7 +24,7 @@ def index_req():
 			return redirect(url_for('game_user_waiting_req'))
 		# return "Вы успешно авторизованы и добавлены к игре, игра скоро начнется. Ваш ник {0}".format(userSession.user.name) # Тут тоже
 		# return "Тут типо будет обратный отсчет" # render_tempates('game-wait.html')
-	return redirect(url_for('registration_req'))
+	return render_template('index-page_template.html')
 
 @app.route('/game')
 def game_req():
@@ -70,11 +71,23 @@ def authorization_req():
 		return redirect(url_for('registration_req'))
 
 
-@app.route('/registartion')
+@app.route('/registration')
 def registration_req():
 	session['user_id'] = users.addUser()
 	return redirect(url_for('authorization_req'))
 
+@app.route('/game/api/check_for_waiting')
+def api_check_for_waiting_req():
+	if not checkToken(session):
+		return redirect(url_for('index_req'))
+	userSession = userSessions.getSessionByToken(session['user_token'])
+	if not game.userAddedToGame(userSession):
+		return redirect(url_for('index_req'))
+	return jsonify({
+		'current_players_count': game.get_players_count(),
+		'need_players_count': game.needPlayersCount,
+		'is_waiting_for_player': game.is_waiting_for_player()
+	})
 
 def checkToken(session):
 	return (

@@ -7,7 +7,7 @@ class Game():
 	
 	def __init__(self):
 		self._state = WATITNG_FOR_PLAYER
-		self.needPlayersCount = 2
+		self.needPlayersCount = 3
 		self._players = []
 	
 	def is_none_state(self):
