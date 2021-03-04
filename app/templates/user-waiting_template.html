@@ -5,39 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ожидание игроков</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script>
-        setInterval(function(){
-            $.ajax({
-                method: "GET",
-                url: "api/check_for_waiting"
-            }).done(function (response) {
-                    console.log(response);
-                    $('#current_players_count').text(response.current_players_count);
-                    $('#need_players_count').text(response.need_players_count);
-                    if (! response.is_waiting_for_player) 
-                        document.location.reload();
-            })
-        }, 1000);
-        // function gg(response) {
-        //     console.log(response);
-        // }
-        // if (response.ok) {
-        //         let json = await response.json();
-        //         console.log(json);
-        //         $('#current_current_players_count')
-        //     }
-        //     else {
-        //         alert("Ошибка HTTP: " + response.status);
-        //     }
-    </script>
+    <script src="{{url_for('static', filename='javascript/waiting_template.js')}}"></script>
 </head>
 <body>
-    <h1>Вы успешно подключены <br>Ожидание других игроков</h1>
+    <h1>Вы успешно подключены <br><span id = 'header_text'>Ожидание других игроков</span></h1>
     <p>Ваше имя: <b>{{user_name}}</b></p>
     <p>Подключено <span id = 'current_players_count'>{{current_players_count}}</span> / <span id = 'need_players_count'>{{need_players_count}}</span></p>
-
-    <!-- <script>
-        fetch
-    </script> -->
+    
+    <div id = 'count_down_block' style = 'display: none; font-size: 3em;'>
+        Игра начнется через <span id = 'count_down'>10</span>
+    </div>
 </body>
 </html>

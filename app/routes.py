@@ -10,6 +10,9 @@ from app import app
 from app import userSessions, users
 from app import game
 
+from app.config_module.base_config import COUNT_DOWN_BEFORE_PREPARING__TIME
+from app.config_module.base_config import COUNT_DOWN_BEFORE_PREPARING, WATITNG_FOR_PLAYER
+
 @app.errorhandler(404)
 def notFoundPage(error):
     return render_template('error404_template.html')
@@ -52,14 +55,13 @@ def game_user_waiting_req():
 	userSession = userSessions.getSessionByToken(session['user_token'])
 	if not game.userAddedToGame(userSession):
 		return redirect(url_for('index_req'))
-	if not game.is_waiting_for_player():
+	if not game.state(COUNT_DOWN_BEFORE_PREPARING) and not game.state(WATITNG_FOR_PLAYER):
 		return redirect(url_for('game_req'))
-
-	game.state_to_preparing_for_game()
+	game.state_to_count_down_before_preparing()
 	param = {
 		'current_players_count': game.get_players_count(),
 		'need_players_count': game.needPlayersCount,
-		'user_name': userSession.user.name
+		'user_name': userSession.user.name,
 	}
 	return render_template('user-waiting_template.html', **param)
 
@@ -85,11 +87,14 @@ def api_check_for_waiting_req():
 	userSession = userSessions.getSessionByToken(session['user_token'])
 	if not game.userAddedToGame(userSession):
 		return redirect(url_for('index_req'))
-	return jsonify({
-		'current_players_count': game.get_players_count(),
-		'need_players_count': game.needPlayersCount,
-		'is_waiting_for_player': game.is_waiting_for_player()
-	})
+	ans = {
+			'current_players_count': game.get_players_count(),
+			'need_players_count': game.needPlayersCount,
+			'is_count_down_before_preparing': game.state(COUNT_DOWN_BEFORE_PREPARING)
+	}
+	if game.state(COUNT_DOWN_BEFORE_PREPARING):
+		ans['left_time'] = (COUNT_DOWN_BEFORE_PREPARING__TIME - game.count_down_1_active_time).seconds
+	return jsonify(ans)
 
 def checkToken(session):
 	return (
