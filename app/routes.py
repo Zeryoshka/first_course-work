@@ -92,9 +92,6 @@ def api_check_for_waiting_req():
 	})
 
 def checkToken(session):
-	if not userSessions.getSessionByToken(session['user_token']).isActive():
-		userSessions.deleteOldToken(session['user_token'])
-
 	return (
 		'user_token' in session and \
 		userSessions.existSessionWithToken(session['user_token']) and \
