@@ -1,7 +1,11 @@
 from app.game_module.player import Player
 
 from app.config_module.base_config import NONE_STATE, WATITNG_FOR_PLAYER, PREPARING_FOR_GAME, \
-	AUCTION, EMULATION, RESAULTS
+	AUCTION, EMULATION, RESAULTS, COUNT_DOWN_BEFORE_PREPARING
+
+from app.config_module.base_config import COUNT_DOWN_BEFORE_PREPARING__TIME
+
+from datetime import datetime, timedelta
 
 class Game():
 	
@@ -9,6 +13,7 @@ class Game():
 		self._state = WATITNG_FOR_PLAYER
 		self.needPlayersCount = 3
 		self._players = []
+		self._time_start_count_down_before_preparing = datetime.now()
 	
 	def is_none_state(self):
 		return self._state == NONE_STATE
@@ -27,6 +32,10 @@ class Game():
 	
 	def is_resaults(self):
 		return self._state == RESAULTS
+	
+	
+	def state(self, state):
+		return self._state == state
 
 	def addPlayer(self, userSession):
 		self.delPlayersWithDiedSession()
@@ -45,11 +54,30 @@ class Game():
 			if not player.userSession.isActive():
 				del self._players[i]
 
-	def state_to_preparing_for_game(self):
-		if self.is_waiting_for_player() and self.needPlayersCount == len(self._players):
-			self._state = PREPARING_FOR_GAME
+	def state_to_count_down_before_preparing(self):
+		print(f'{self._state} {len(self._players)}')
+		if self.state(WATITNG_FOR_PLAYER) and self.needPlayersCount == len(self._players):
+			self._state = COUNT_DOWN_BEFORE_PREPARING
+			self._time_start_count_down_before_preparing = datetime.now()
 			return True
 		return False
+	
+	def state_to_preparing_for_game(slef):
+		if self.state(COUNT_DOWN_BEFORE_PREPARING) and \
+		self.count_down_1_active_time >= COUNT_DOWN_BEFORE_PREPARING__TIME:
+			self._state = PREPARING_FOR_GAME
+			return True
+		else:
+			return False
+
+	@property
+	def count_down_1_active_time(self):
+		return datetime.now() - self.time_start_count_down_before_preparing
+	
+	@property
+	def time_start_count_down_before_preparing(self):
+		return self._time_start_count_down_before_preparing
+
 	def get_players_count(self):
 		return len(self._players)
 
