@@ -18,3 +18,8 @@ class UserSessions():
             if session.token == token:
                 return session
         assert(False)
+
+    def deleteOldToken(self, token):
+        for session in self._sessions:
+            if session.token == token:
+                del session
