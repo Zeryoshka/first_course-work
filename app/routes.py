@@ -54,6 +54,8 @@ def game_user_waiting_req():
 		return redirect(url_for('index_req'))
 	if not game.is_waiting_for_player():
 		return redirect(url_for('game_req'))
+
+	game.state_to_preparing_for_game()
 	param = {
 		'current_players_count': game.get_players_count(),
 		'need_players_count': game.needPlayersCount,

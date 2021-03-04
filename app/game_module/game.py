@@ -33,7 +33,6 @@ class Game():
 		assert(self.is_waiting_for_player())
 		assert(len(self._players) < self.needPlayersCount)
 		self._players.append(Player(userSession))
-		self.state_to_preparing_for_game()
 	
 	def userAddedToGame(self, userSession):
 		for player in self._players:
