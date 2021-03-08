@@ -22,11 +22,12 @@ def notFoundPage(error):
 def index_req():
 	if checkToken(session):
 		userSession = userSessions.getSessionByToken(session['user_token'])
-		if not game.userAddedToGame(userSession):
-			game.addPlayer(userSession)
-			return redirect(url_for('game_user_waiting_req'))
-		# return "Вы успешно авторизованы и добавлены к игре, игра скоро начнется. Ваш ник {0}".format(userSession.user.name) # Тут тоже
-		# return "Тут типо будет обратный отсчет" # render_tempates('game-wait.html')
+		if game.state(WATITNG_FOR_PLAYER):
+			if not game.userAddedToGame(userSession):
+				game.addPlayer(userSession)
+				return redirect(url_for('game_user_waiting_req'))
+		else:
+			return "<h1>Игра уже началсь, заходите в другой раз</h1>"
 	return render_template('index-page_template.html')
 
 @app.route('/game')
