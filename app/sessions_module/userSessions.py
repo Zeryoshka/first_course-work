@@ -7,6 +7,7 @@ class UserSessions():
 
     def addUserSesion(self, user):
         self._sessions.append(UserSession(user))
+        user.userSession = UserSession
         return self._sessions[-1].token
 
     def existSessionWithToken(self, token):
