@@ -1,18 +1,30 @@
 from datetime import datetime
-from datetime import deltatime
+from datetime import timedelta
 
 class CounterDown:
     '''
     Class for synchronizing the countdown in game
     '''
     def __init__(self, time_len):
-        self.time_len = time_len
+        assert isinstance(time_len, timedelta)
+        self._time_len = time_len
+        self._started = False
 
     def start(self):
-        self._time_start = datetime.now()
+        '''
+        start counterdown and record start_time
+        '''
+        self._started = True
+        self._start_time = datetime.now()
 
+    @property
+    def started(self):
+        return self._started
+
+    @property
+    def finifshed(self):
+        return datetime.now() - self._start_time > self._time_len
+
+    @property
     def left_time(self):
-        return datetime.now() - self._time_start
-
-    def is_end(self):
-        return datetime.now() - self._time_start > self.time_len
+        return datetime.now() - self._start_time
