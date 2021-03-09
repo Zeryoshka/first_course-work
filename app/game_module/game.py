@@ -1,7 +1,7 @@
 from app.game_module.player import Player
 
 from app.config_module.base_config import NONE_STATE, WATITNG_FOR_PLAYER, PREPARING_FOR_GAME, \
-	AUCTION, EMULATION, RESAULTS, COUNT_DOWN_BEFORE_PREPARING
+	AUCTION, EMULATION, RESULTS, COUNT_DOWN_BEFORE_PREPARING
 
 from app.config_module.base_config import COUNT_DOWN_BEFORE_PREPARING__TIME
 
@@ -31,9 +31,8 @@ class Game():
 		return self._state == EMULATION
 	
 	def is_resaults(self):
-		return self._state == RESAULTS
-	
-	
+		return self._state == RESULTS
+
 	def state(self, state):
 		return self._state == state
 
@@ -62,7 +61,7 @@ class Game():
 			return True
 		return False
 	
-	def state_to_preparing_for_game(slef):
+	def state_to_preparing_for_game(self):
 		if self.state(COUNT_DOWN_BEFORE_PREPARING) and \
 		self.count_down_1_active_time >= COUNT_DOWN_BEFORE_PREPARING__TIME:
 			self._state = PREPARING_FOR_GAME
