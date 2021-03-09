@@ -1,6 +1,6 @@
 from app.game_module.player import Player
 
-from app.config_module.base_config import NONE_STATE, WATITNG_FOR_PLAYER, PREPARING_FOR_GAME, \
+from app.config_module.base_config import NONE_STATE, WAITING_FOR_PLAYER, PREPARING_FOR_GAME, \
 	AUCTION, EMULATION, RESULTS, COUNT_DOWN_BEFORE_PREPARING
 
 from app.config_module.base_config import COUNT_DOWN_BEFORE_PREPARING__TIME
@@ -10,7 +10,7 @@ from datetime import datetime, timedelta
 class Game():
 	
 	def __init__(self):
-		self._state = WATITNG_FOR_PLAYER
+		self._state = WAITING_FOR_PLAYER
 		self.needPlayersCount = 3
 		self._players = []
 		self._time_start_count_down_before_preparing = datetime.now()
@@ -19,7 +19,7 @@ class Game():
 		return self._state == NONE_STATE
 	
 	def is_waiting_for_player(self):
-		return self._state == WATITNG_FOR_PLAYER
+		return self._state == WAITING_FOR_PLAYER
 	
 	def is_preparing_for_game(self):
 		return self._state == PREPARING_FOR_GAME
@@ -55,7 +55,7 @@ class Game():
 
 	def state_to_count_down_before_preparing(self):
 		print(f'{self._state} {len(self._players)}')
-		if self.state(WATITNG_FOR_PLAYER) and self.needPlayersCount == len(self._players):
+		if self.state(WAITING_FOR_PLAYER) and self.needPlayersCount == len(self._players):
 			self._state = COUNT_DOWN_BEFORE_PREPARING
 			self._time_start_count_down_before_preparing = datetime.now()
 			return True
