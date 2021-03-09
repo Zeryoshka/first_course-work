@@ -15,7 +15,7 @@ from app.config_module.base_config import COUNT_DOWN_BEFORE_PREPARING, WAITING_F
 
 @app.errorhandler(404)
 def notFoundPage(error):
-    return render_template('error404_template.html')
+	return render_template('error404_template.html')
 
 @app.route('/')
 @app.route('/index')
@@ -29,6 +29,7 @@ def index_req():
 		else:
 			return "<h1>Игра уже началсь, заходите в другой раз</h1>"
 	return render_template('index-page_template.html')
+
 
 @app.route('/game')
 def game_req():
@@ -99,14 +100,14 @@ def api_check_for_waiting_req():
 
 def checkToken(session):
 	return (
-		'user_token' in session and \
-		userSessions.existSessionWithToken(session['user_token']) and \
+		'user_token' in session and
+		userSessions.existSessionWithToken(session['user_token']) and
 		userSessions.getSessionByToken(session['user_token']).isActive()
 	)
 
 def checkUserId(session):
 	return (
-		'user_id' in session and \
-		users.existUserWithId(session['user_id']) and \
+		'user_id' in session and
+		users.existUserWithId(session['user_id']) and
 		users.getUserById(session['user_id'])
 	)

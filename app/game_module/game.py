@@ -63,7 +63,7 @@ class Game():
 	
 	def state_to_preparing_for_game(self):
 		if self.state(COUNT_DOWN_BEFORE_PREPARING) and \
-		self.count_down_1_active_time >= COUNT_DOWN_BEFORE_PREPARING__TIME:
+			self.count_down_1_active_time >= COUNT_DOWN_BEFORE_PREPARING__TIME:
 			self._state = PREPARING_FOR_GAME
 			return True
 		else:
@@ -79,4 +79,3 @@ class Game():
 
 	def get_players_count(self):
 		return len(self._players)
-
