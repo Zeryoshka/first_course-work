@@ -48,6 +48,7 @@ class Waiting_for_player:
 	def start_timer(self):
 		if (len(self.game._players) == self.game.needPlayersCount):
 			self.counterDown.start()
+		self.sub_state = WAITING_FOR_PLAYER__COUNTER_DOWN
 		return self.counterDown.started
 
 	def __getattribute__(self, name):
