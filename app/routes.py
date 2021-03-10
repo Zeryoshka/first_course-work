@@ -11,7 +11,7 @@ from app import userSessions, users
 from app import game
 
 from app.config_module.base_config import COUNT_DOWN_BEFORE_PREPARING__TIME
-from app.config_module.base_config import COUNT_DOWN_BEFORE_PREPARING, WATITNG_FOR_PLAYER
+from app.config_module.base_config import COUNT_DOWN_BEFORE_PREPARING, WAITING_FOR_PLAYER
 
 @app.errorhandler(404)
 def notFoundPage(error):
@@ -34,7 +34,7 @@ def game_req():
 	if checkToken(session):
 		userSession = userSessions.getSessionByToken(session['user_token'])
 		if game.userAddedToGame(userSession):
-			if game.is_waiting_for_player():
+			if game.state(WATITNG_FOR_PLAYER):
 				return redirect(url_for('game_user_waiting_req'))
 			if game.is_preparing_for_game():
 				return redirect(url_for('game_preparing_req'))
