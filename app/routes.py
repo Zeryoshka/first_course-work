@@ -4,6 +4,8 @@ from flask import session
 from flask import redirect, url_for
 from flask import jsonify
 
+from functools import wraps
+
 import json
 
 from app import app
@@ -49,7 +51,8 @@ def game_req():
 
 
 @app.route('/game/user_waiting')
-def game_user_waiting_req():
+@base_game_check
+def game_user_waiting_req(userSession):
 	if not checkToken(session):
 		return redirect(url_for('index_req'))
 	userSession = userSessions.getSessionByToken(session['user_token'])
@@ -57,6 +60,7 @@ def game_user_waiting_req():
 		return redirect(url_for('index_req'))
 	if not game.state(COUNT_DOWN_BEFORE_PREPARING) and not game.state(WATITNG_FOR_PLAYER):
 		return redirect(url_for('game_req'))
+
 	game.state_to_count_down_before_preparing()
 	param = {
 		'current_players_count': game.get_players_count(),
@@ -109,3 +113,21 @@ def checkUserId(session):
 		users.existUserWithId(session['user_id']) and \
 		users.getUserById(session['user_id'])
 	)
+
+def base_game_check(func):
+	'''
+	func for decorator for requests starts with game/...
+	It needs for check user parametrs and redirect in case some problems
+	'''
+	@wraps(func)
+	def wrapped():
+		if not checkToken(session):
+    		return redirect(url_for('index_req'))
+		userSession = userSessions.getSessionByToken(session['user_token'])
+		if not game.userAddedToGame(userSession):
+			return redirect(url_for('index_req'))
+		if not game.state(COUNT_DOWN_BEFORE_PREPARING) and not game.state(WATITNG_FOR_PLAYER):
+			return redirect(url_for('game_req'))
+		return func(userSession)
+	
+	return wrapped
