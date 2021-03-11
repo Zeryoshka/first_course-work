@@ -3,7 +3,8 @@ from datetime import timedelta
 SECRET_KEY = 'KEY_KEY' # Ключ для flask.session
 
 # Константы времени (в секундах)
-COUNT_DOWN_BEFORE_PREPARING__TIME = timedelta(seconds=10) 
+COUNT_DOWN_BEFORE_PREPARING__TIME = timedelta(seconds=10)
+PREPARING_FOR_GAME__TIME = timedelta(minutes=5)
 USERSESSION_LIFETIME = 5000 # Время жизни UserSession
 
 # Состояния объекта Game (их коды)
@@ -19,6 +20,7 @@ RESULTS = 5 # Результаты
 # sub_states waiting for player in Game (codes)
 WAITING_FOR_PLAYER__WAIT = 0
 WAITING_FOR_PLAYER__COUNTER_DOWN = 1
+
 
 #Папки
 STATIC_FOLDER = 'static' # Папка со статическими файлам
