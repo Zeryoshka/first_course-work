@@ -25,3 +25,7 @@ WAITING_FOR_PLAYER__COUNTER_DOWN = 1
 #Папки
 STATIC_FOLDER = 'static' # Папка со статическими файлам
 TEMPLATE_FOLDER = 'templates'
+
+# Файлы
+LOTS_FILE = 'lots.svg'
+WEATHER_PREDICTION_FILE = 'weather.svg'

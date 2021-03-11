@@ -3,29 +3,32 @@ var fnc = setInterval(function(){
         method: "GET",
         url: "api/check_for_waiting"
     }).done(function (response) {
-            console.log(response)
-            if (!response.access)
-                window.location.reload()
-            else {
-                $('#current_players_count').text(response.current_players_count);
-                $('#need_players_count').text(response.need_players_count);
-                if (response.timer_is_active) {
-                    $('#header_text').text('Игра скоро начнется');
-                    clearInterval(fnc);
-                    startCountDown(response.left_time);
-                }
+        console.log(response);
+        if (!response.access)
+            window.location.reload();
+        else {
+            $('#current_players_count').text(response.current_players_count);
+            $('#need_players_count').text(response.need_players_count);
+            if (response.timer_is_active) {
+                $('#header_text').text('Игра скоро начнется');
+                clearInterval(fnc);
+                startCountDown(response.left_time);
             }
+        }
     })
 }, 400);
 
 function tikTak(left_time) {
-        $('#count_down').text(left_time);
-        if (left_time > 0) {
-            setTimeout(tikTak, 1000, left_time - 1);
-        }
-        else {
-            window.location.href = '/preparing_for_game';
-        }
+    $('#count_down').text(left_time);
+    if (left_time > 0) {
+        setTimeout(tikTak, 1000, left_time - 1);
+    }
+    else
+        $.get("api/check_and_close_state").done(function(response){
+            if (!response.access)
+                window.location.reload();
+            window.location.href = './preparing_for_game';
+        });
 }
 
 function startCountDown(left_time) {

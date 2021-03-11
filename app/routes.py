@@ -40,7 +40,9 @@ def check_state(state):
 		@wraps(func)
 		def wrapped(*args, **kwargs):
 			if not game.state(state):
+				print('+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++')
 				return redirect(url_for('game_req'))
+			print('================================================================')
 			return func(*args, **kwargs)
 
 		return wrapped
@@ -77,19 +79,22 @@ def index_req():
 
 @app.route('/game')
 @check_token
+@check_user_added_to_game
 def game_req(userSession):
-	if game.userAddedToGame(userSession):
-		if game.state(WAITING_FOR_PLAYER):
-			return redirect(url_for('game_user_waiting_req'))
-		if game.state(PREPARING_FOR_GAME):
-			return redirect(url_for('game_preparing_req'))
-		# if game.is_auction():
-			# return redirect(url_for('game_user_waiting_req'))
-		# if game.is_emulation():
-			# return redirect(url_for('game_emaulation_req'))
-		# if game.is_resaults():
-			# return redirect(url_for('game_resaults_req'))
-		return "NONE_STATE (Мы пока не знаем, как так получилось)"
+	print(game.__getattribute__("_state"))
+	if game.state(WAITING_FOR_PLAYER):
+		return redirect(url_for('game_user_waiting_req'))
+	if game.state(PREPARING_FOR_GAME):
+		print('Этого быть не должно')
+		return redirect(url_for('game_preparing_req'))
+	# if game.is_auction():
+		# return redirect(url_for('game_user_waiting_req'))
+	# if game.is_emulation():
+		# return redirect(url_for('game_emaulation_req'))
+	# if game.is_resaults():
+		# return redirect(url_for('game_resaults_req'))
+	print('Этого точно не может быть')
+	return "NONE_STATE (Мы пока не знаем, как так получилось)"
 
 
 @app.route('/game/user_waiting')
@@ -108,6 +113,12 @@ def game_user_waiting_req(userSession):
 	}
 	return render_template('user-waiting_template.html', **param)
 
+@app.route('/game/preparing_for_game')
+@check_token
+@check_user_added_to_game
+@check_state(PREPARING_FOR_GAME)
+def game_preparing_req(userSession):
+	return render_template('preparing-for-game_template.html')
 
 @app.route('/authorization')
 def authorization_req():
@@ -141,6 +152,22 @@ def api_check_for_waiting_req():
 			}
 			if game.waiting_for_player.state(WAITING_FOR_PLAYER__COUNTER_DOWN):
 				ans['left_time'] = game.waiting_for_player.counterDown.left_time.seconds
+	return jsonify(ans)
+
+@app.route('/game/api/check_and_close_state')
+def api_check_and_close_state_req():
+	if not condition_truly_token():
+		ans = {'access': False}
+	else:
+		userSession = userSessions.getSessionByToken(session['user_token'])
+		if not game.userAddedToGame(userSession):
+			ans = {'access': False}
+		else:
+			game.waiting_for_player.close_state()
+			ans = {
+				'access': True,
+			}
+
 	return jsonify(ans)
 
 def checkUserId(session):
