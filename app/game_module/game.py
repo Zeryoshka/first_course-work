@@ -48,10 +48,7 @@ class Waiting_for_player:
 
 	def start_timer(self):
 		self.delPlayersWithDiedSession()
-		print('______________________________________________________________________________________________________________________________________________________________________________________________________________________-')
-		print(f'{self.game.players_count} {self.game.needPlayersCount}')
 		if (self.game.players_count == self.game.needPlayersCount):
-			print('вошло')
 			self.counterDown.start()
 			self._sub_state = WAITING_FOR_PLAYER__COUNTER_DOWN
 		return self.counterDown.started

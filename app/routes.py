@@ -124,19 +124,23 @@ def registration_req():
 	return redirect(url_for('authorization_req'))
 
 @app.route('/game/api/check_for_waiting')
-@check_token
-@check_user_added_to_game
-def api_check_for_waiting_req(userSession):
-	if not game.userAddedToGame(userSession):
-		return redirect(url_for('index_req'))
-	game.waiting_for_player.close_state()
-	ans = {
-			'current_players_count': game.players_count,
-			'need_players_count': game.needPlayersCount,
-			'timer_is_active': game.waiting_for_player.state(WAITING_FOR_PLAYER__COUNTER_DOWN)
-	}
-	if game.waiting_for_player.state(WAITING_FOR_PLAYER__COUNTER_DOWN):
-		ans['left_time'] = game.waiting_for_player.counterDown.left_time.seconds
+def api_check_for_waiting_req():
+	if not condition_truly_token():
+		ans = {'access': False}
+	else:
+		userSession = userSessions.getSessionByToken(session['user_token'])
+		if not game.userAddedToGame(userSession):
+			ans = {'access': False}
+		else:
+			game.waiting_for_player.close_state()
+			ans = {
+				'access': True,
+				'current_players_count': game.players_count,
+				'need_players_count': game.needPlayersCount,
+				'timer_is_active': game.waiting_for_player.state(WAITING_FOR_PLAYER__COUNTER_DOWN)
+			}
+			if game.waiting_for_player.state(WAITING_FOR_PLAYER__COUNTER_DOWN):
+				ans['left_time'] = game.waiting_for_player.counterDown.left_time.seconds
 	return jsonify(ans)
 
 def checkUserId(session):

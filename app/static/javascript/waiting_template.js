@@ -3,7 +3,8 @@ var fnc = setInterval(function(){
         method: "GET",
         url: "api/check_for_waiting"
     }).done(function (response) {
-            if (response.accses)
+            console.log(response)
+            if (!response.access)
                 window.location.reload()
             else {
                 $('#current_players_count').text(response.current_players_count);
