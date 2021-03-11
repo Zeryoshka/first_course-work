@@ -3,7 +3,6 @@ var fnc = setInterval(function(){
         method: "GET",
         url: "api/check_for_waiting"
     }).done(function (response) {
-            console.log(response);
             $('#current_players_count').text(response.current_players_count);
             $('#need_players_count').text(response.need_players_count);
             if (response.timer_is_active) {
@@ -16,7 +15,6 @@ var fnc = setInterval(function(){
 
 function tikTak(left_time) {
         $('#count_down').text(left_time);
-        console.log(left_time)
         if (left_time > 0) {
             setTimeout(tikTak, 1000, left_time - 1);
         }

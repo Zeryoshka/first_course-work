@@ -14,7 +14,6 @@ class CounterDown:
         '''
         start counterdown and record start_time
         '''
-        print('it run_________________-')
         if not self.started:
             self._started = True
             self._start_time = datetime.now()
@@ -22,7 +21,6 @@ class CounterDown:
 
     @property
     def started(self):
-        print(f'Started: {self._started}')
         return self._started
 
     @property
@@ -31,7 +29,6 @@ class CounterDown:
 
     @property
     def left_time(self):
-        # print((self._start_time + self._time_len - datetime.now()).seconds)
         if datetime.now() - self._start_time < self._time_len:
             return self._time_len - (datetime.now() - self._start_time)
         return timedelta(0)

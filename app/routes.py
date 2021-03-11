@@ -25,7 +25,6 @@ def check_token(func):
 		if not condition_truly_token():
 			return redirect(url_for('index_req'))
 		x = session['user_token']
-		# print(userSessions.existSessionWithToken(session['user_token']))
 		userSession = userSessions.getSessionByToken(x)
 		return func(*args, **kwargs, userSession=userSession)
 
@@ -80,7 +79,6 @@ def index_req():
 @check_token
 def game_req(userSession):
 	if game.userAddedToGame(userSession):
-		print(game.state(WAITING_FOR_PLAYER), game.state(PREPARING_FOR_GAME))
 		if game.state(WAITING_FOR_PLAYER):
 			return redirect(url_for('game_user_waiting_req'))
 		if game.state(PREPARING_FOR_GAME):
@@ -137,10 +135,8 @@ def api_check_for_waiting_req(userSession):
 			'need_players_count': game.needPlayersCount,
 			'timer_is_active': game.waiting_for_player.state(WAITING_FOR_PLAYER__COUNTER_DOWN)
 	}
-	print(game.waiting_for_player.state(WAITING_FOR_PLAYER__COUNTER_DOWN))
 	if game.waiting_for_player.state(WAITING_FOR_PLAYER__COUNTER_DOWN):
 		ans['left_time'] = game.waiting_for_player.counterDown.left_time.seconds
-		print(ans['left_time'])
 	return jsonify(ans)
 
 def checkUserId(session):
