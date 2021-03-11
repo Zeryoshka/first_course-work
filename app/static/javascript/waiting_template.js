@@ -3,12 +3,16 @@ var fnc = setInterval(function(){
         method: "GET",
         url: "api/check_for_waiting"
     }).done(function (response) {
-            $('#current_players_count').text(response.current_players_count);
-            $('#need_players_count').text(response.need_players_count);
-            if (response.timer_is_active) {
-                $('#header_text').text('Игра скоро начнется');
-                clearInterval(fnc);
-                startCountDown(response.left_time);
+            if (response.accses)
+                window.location.reload()
+            else {
+                $('#current_players_count').text(response.current_players_count);
+                $('#need_players_count').text(response.need_players_count);
+                if (response.timer_is_active) {
+                    $('#header_text').text('Игра скоро начнется');
+                    clearInterval(fnc);
+                    startCountDown(response.left_time);
+                }
             }
     })
 }, 400);
