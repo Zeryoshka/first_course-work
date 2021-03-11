@@ -118,7 +118,14 @@ def game_user_waiting_req(userSession):
 @check_user_added_to_game
 @check_state(PREPARING_FOR_GAME)
 def game_preparing_req(userSession):
-	return render_template('preparing-for-game_template.html')
+	'''
+	Functin for request "/game/preparing_for_game"
+	'''
+	game.preparing_for_game.start()
+	param = {
+		'left_time': game.preparing_for_game.left_time.seconds
+	}
+	return render_template('preparing-for-game_template.html',)
 
 @app.route('/authorization')
 def authorization_req():
