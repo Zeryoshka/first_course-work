@@ -6,13 +6,13 @@ var fnc = setInterval(function(){
             console.log(response);
             $('#current_players_count').text(response.current_players_count);
             $('#need_players_count').text(response.need_players_count);
-            if (response.is_count_down_before_preparing) {
+            if (response.timer_is_active) {
                 $('#header_text').text('Игра скоро начнется');
                 clearInterval(fnc);
                 startCountDown(response.left_time);
             }
     })
-}, 300);
+}, 400);
 
 function tikTak(left_time) {
         $('#count_down').text(left_time);
