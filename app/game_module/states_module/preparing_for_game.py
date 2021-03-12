@@ -41,4 +41,4 @@ class Preparing_for_game:
         '''
         Method for getting information about weather prediction in needed format
         '''
-        return self.game.weather_prediction_file
+        return self.game.weathercast_file

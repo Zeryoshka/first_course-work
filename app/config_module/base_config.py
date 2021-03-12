@@ -28,4 +28,4 @@ TEMPLATE_FOLDER = 'templates'
 
 # Файлы
 LOTS_FILE = 'game_param/lots.svg'
-WEATHER_PREDICTION_FILE = 'game_param/weather.svg'
+WEATHERCAST_FILE = 'game_param/weather.svg'

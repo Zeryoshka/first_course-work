@@ -7,7 +7,7 @@ from app.config_module.base_config import NONE_STATE, WAITING_FOR_PLAYER, PREPAR
     AUCTION, EMULATION, RESULTS, COUNT_DOWN_BEFORE_PREPARING
 from app.config_module.base_config import WAITING_FOR_PLAYER__COUNTER_DOWN, WAITING_FOR_PLAYER__WAIT
 from app.config_module.base_config import COUNT_DOWN_BEFORE_PREPARING__TIME
-from app.config_module.base_config import LOTS_FILE, WEATHER_PREDICTION_FILE
+from app.config_module.base_config import LOTS_FILE, WEATHERCAST_FILE
 
 from datetime import datetime, timedelta
 
@@ -27,7 +27,7 @@ class Game():
         self.waiting_for_player = Waiting_for_player(self)
         self.preparing_for_game = Preparing_for_game(self)
         self._lots_file = LOTS_FILE
-        self._weather_prediction_file = WEATHER_PREDICTION_FILE
+        self._weathercast_file = WEATHERCAST_FILE
 
     @property
     def lots_file(self):
@@ -37,11 +37,11 @@ class Game():
         return self._lots_file
 
     @property
-    def weather_prediction_file(self):
+    def weathercast_file(self):
         '''
         Property for getting file adress with weathercast
         '''
-        return self._weather_prediction_file
+        return self._weathercast_file
 
     def state(self, state):
         '''
