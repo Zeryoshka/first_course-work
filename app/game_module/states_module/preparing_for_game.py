@@ -1,5 +1,6 @@
-from app.game_module.counter_down import counterDown
+from app.game_module.counter_down import CounterDown
 
+from app.config_module.base_config import NONE_STATE, WAITING_FOR_PLAYER, PREPARING_FOR_GAME, PREPARING_FOR_GAME__TIME
 
 class Preparing_for_game:
     '''
