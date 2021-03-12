@@ -9,6 +9,7 @@ class Waiting_for_player:
     '''
     It's a class for state WAITING_FOR_PLAYER
     '''
+
     def __init__(self, game):
         '''
         Init Method for class Waiting for player
