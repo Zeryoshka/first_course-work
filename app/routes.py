@@ -123,9 +123,11 @@ def game_preparing_req(userSession):
 	'''
 	game.preparing_for_game.start()
 	param = {
-		'left_time': game.preparing_for_game.left_time.seconds
+		'left_time': game.preparing_for_game.counterDown.left_time.seconds,
+		'prediction_file': game.weather_prediction_file,
+		'lots_file': game.lots_file
 	}
-	return render_template('preparing-for-game_template.html',)
+	return render_template('preparing-for-game_template.html', **param)
 
 @app.route('/authorization')
 def authorization_req():

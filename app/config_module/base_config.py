@@ -27,5 +27,5 @@ STATIC_FOLDER = 'static' # Папка со статическими файлам
 TEMPLATE_FOLDER = 'templates'
 
 # Файлы
-LOTS_FILE = 'lots.svg'
-WEATHER_PREDICTION_FILE = 'weather.svg'
+LOTS_FILE = 'game_param/lots.svg'
+WEATHER_PREDICTION_FILE = 'game_param/weather.svg'

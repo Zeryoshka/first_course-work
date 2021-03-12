@@ -19,8 +19,16 @@ class Game():
 		self.players = []
 		self.waiting_for_player = Waiting_for_player(self)
 		self.preparing_for_game = Preparing_for_game(self)
-		self.lots_file = LOTS_FILE
-		self.weather_prediction_file = WEATHER_PREDICTION_FILE
+		self._lots_file = LOTS_FILE
+		self._weather_prediction_file = WEATHER_PREDICTION_FILE
+
+	@property
+	def lots_file(self):
+		return self._lots_file
+
+	@property
+	def weather_prediction_file(self):
+		return self._weather_prediction_file
 
 	def state(self, state):
 		return self._state == state
