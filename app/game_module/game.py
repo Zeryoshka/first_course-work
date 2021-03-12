@@ -22,7 +22,7 @@ class Game():
         Init function of Game class
         '''
         self._state = WAITING_FOR_PLAYER
-        self.needPlayersCount = 3
+        self._needPlayersCount = 3
         self.players = []
         self.waiting_for_player = Waiting_for_player(self)
         self.preparing_for_game = Preparing_for_game(self)
@@ -39,7 +39,7 @@ class Game():
     @property
     def weather_prediction_file(self):
         '''
-        Property for get file adress with weathercast
+        Property for getting file adress with weathercast
         '''
         return self._weather_prediction_file
 
@@ -68,6 +68,14 @@ class Game():
     @property
     def players_count(self):
         '''
-        Property for get current players count
+        Property for getting current players count
         '''
         return len(self.players)
+    
+    @property
+    def needPlayersCount(slef):
+        '''
+        Property for get needed players count
+        '''
+        return slef._needPlayersCount
+
