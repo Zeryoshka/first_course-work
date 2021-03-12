@@ -71,11 +71,10 @@ class Game():
         Property for getting current players count
         '''
         return len(self.players)
-    
+
     @property
     def needPlayersCount(slef):
         '''
         Property for get needed players count
         '''
         return slef._needPlayersCount
-
