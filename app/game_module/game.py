@@ -18,6 +18,9 @@ class Game():
     '''
 
     def __init__(self):
+        '''
+        Init function of Game class
+        '''
         self._state = WAITING_FOR_PLAYER
         self.needPlayersCount = 3
         self.players = []
@@ -28,19 +31,35 @@ class Game():
 
     @property
     def lots_file(self):
+        '''
+        Property for get file adress with information about lots
+        '''
         return self._lots_file
 
     @property
     def weather_prediction_file(self):
+        '''
+        Property for get file adress with weathercast
+        '''
         return self._weather_prediction_file
 
     def state(self, state):
+        '''
+        Method for check state of game
+        '''
         return self._state == state
 
     def next_state(self):
+        '''
+        Method for set next state of game
+        !!!Don't use not in states objects from state_module!!!
+        '''
         self._state += 1
 
     def userAddedToGame(self, userSession):
+        '''
+        Method for checking user with userSession with added to game
+        '''
         for player in self.players:
             if player.userSession == userSession:
                 return True
@@ -48,4 +67,7 @@ class Game():
 
     @property
     def players_count(self):
+        '''
+        Property for get current players count
+        '''
         return len(self.players)

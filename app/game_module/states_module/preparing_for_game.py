@@ -9,7 +9,7 @@ class Preparing_for_game:
 
     def __init__(self, game):
         '''
-        Init function of preparing_for_game
+        Init function of preparing_for_game class
         '''
         self.game = game
         self.counterDown = CounterDown(PREPARING_FOR_GAME__TIME)
