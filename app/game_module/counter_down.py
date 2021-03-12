@@ -1,10 +1,12 @@
 from datetime import datetime
 from datetime import timedelta
 
+
 class CounterDown:
     '''
     Class for synchronizing the countdown in game
     '''
+
     def __init__(self, time_len):
         assert isinstance(time_len, timedelta)
         self._time_len = time_len

@@ -1,5 +1,6 @@
 #import os
 #import jinja2
+from app import routes
 from flask import Flask
 
 from app.config_module.base_config import SECRET_KEY, STATIC_FOLDER, TEMPLATE_FOLDER
@@ -17,11 +18,8 @@ app = Flask(__name__)
 
 app.secret_key = SECRET_KEY
 app.static_folder = STATIC_FOLDER
-app.template_folder= TEMPLATE_FOLDER
+app.template_folder = TEMPLATE_FOLDER
 
 userSessions = UserSessions()
 users = Users()
 game = Game()
-
-from app import routes
-

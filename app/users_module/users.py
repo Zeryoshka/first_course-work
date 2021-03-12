@@ -1,5 +1,6 @@
 from app.users_module.user import User
 
+
 class Users():
     def __init__(self):
         self._users = []
@@ -17,9 +18,8 @@ class Users():
                 return True
         return False
 
-
     def getUserById(self, user_id):
         for user in self._users:
-            if user.id  == user_id:
+            if user.id == user_id:
                 return user
         assert(False)
