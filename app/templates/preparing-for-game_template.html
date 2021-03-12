@@ -5,11 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Preparing for game</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script src="{{url_for('static', 'javascript/preparing_for_game.js')}}">
-        renderPage('{{left_time}}');
-    </script>
 </head>
 <body>
+    <script src="{{url_for('static', filename='javascript/preparing_for_game.js')}}">
+    </script>
+    <script>renderPage('{{left_time}}');
+        console.log('{{left_time}}');</script>
     <h1>Подготовка к игре <br> Оставшееся время <span id="left-time"></span></h1>
     <p> Прогнозы: <a href="{{url_for('static', filename=prediction_file)}}" download="">скачать</a> </p>
     <p> Лоты: <a href="{{url_for('static', filename=lots_file)}}" download="">скачать</a> </p>

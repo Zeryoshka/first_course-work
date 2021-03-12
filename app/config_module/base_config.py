@@ -4,7 +4,7 @@ SECRET_KEY = 'KEY_KEY' # Ключ для flask.session
 
 # Константы времени (в секундах)
 COUNT_DOWN_BEFORE_PREPARING__TIME = timedelta(seconds=10)
-PREPARING_FOR_GAME__TIME = timedelta(minutes=5)
+PREPARING_FOR_GAME__TIME = timedelta(seconds=20)
 USERSESSION_LIFETIME = 5000 # Время жизни UserSession
 
 # Состояния объекта Game (их коды)
