@@ -1,4 +1,5 @@
 from app.game_module.counter_down import CounterDown
+from app.game_module.player import Player
 
 from app.config_module.base_config import WAITING_FOR_PLAYER
 from app.config_module.base_config import WAITING_FOR_PLAYER__COUNTER_DOWN, WAITING_FOR_PLAYER__WAIT
