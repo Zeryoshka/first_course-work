@@ -12,7 +12,7 @@ from app import app
 from app import userSessions, users
 from app import game
 
-from app.config_module.base_config import WAITING_FOR_PLAYER, PREPARING_FOR_GAME
+from app.config_module.base_config import WAITING_FOR_PLAYER, PREPARING_FOR_GAME, AUCTION
 from app.config_module.base_config import WAITING_FOR_PLAYER__COUNTER_DOWN, WAITING_FOR_PLAYER__WAIT
 
 
@@ -42,9 +42,7 @@ def check_state(state):
         @wraps(func)
         def wrapped(*args, **kwargs):
             if not game.state(state):
-                print('+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++')
                 return redirect(url_for('game_req'))
-            print('================================================================')
             return func(*args, **kwargs)
 
         return wrapped
@@ -89,19 +87,12 @@ def index_req():
 @check_token
 @check_user_added_to_game
 def game_req(userSession):
-    print(game.__getattribute__("_state"))
     if game.state(WAITING_FOR_PLAYER):
         return redirect(url_for('game_user_waiting_req'))
     if game.state(PREPARING_FOR_GAME):
-        print('Этого быть не должно')
         return redirect(url_for('game_preparing_req'))
-    # if game.is_auction():
-        # return redirect(url_for('game_user_waiting_req'))
-    # if game.is_emulation():
-        # return redirect(url_for('game_emaulation_req'))
-    # if game.is_resaults():
-        # return redirect(url_for('game_resaults_req'))
-    print('Этого точно не может быть')
+    if game.state(AUCTION):
+        return redirect(url_for('game_auction_req'))
     return "NONE_STATE (Мы пока не знаем, как так получилось)"
 
 
@@ -112,7 +103,8 @@ def game_req(userSession):
 def game_user_waiting_req(userSession):
     game.waiting_for_player.delPlayersWithDiedSession()
     game.waiting_for_player.start_timer()
-    game.waiting_for_player.close_state()
+    if game.waiting_for_player.close_state():
+        return redirect(url_for('game_req'))
     param = {
         'current_players_count': game.players_count,
         'need_players_count': game.needPlayersCount,
@@ -131,13 +123,51 @@ def game_preparing_req(userSession):
     Functin for request "/game/preparing_for_game"
     '''
     game.preparing_for_game.start()
+    if game.preparing_for_game.close_state():
+        return redirect(url_for('game_req'))
     param = {
         'left_time': game.preparing_for_game.counterDown.left_time.seconds,
-        'prediction_file': game.weather_prediction_file,
+        'prediction_file': game.weathercast_file,
         'lots_file': game.lots_file
     }
     return render_template('preparing-for-game_template.html', **param)
 
+# Заглушка, пока Илья не сделает
+class Lot:
+    def __init__(self, mini, maxi, name, id, who_bought, is_current, purchase_cost):
+        self.max_cost = maxi
+        self.min_cost = mini
+        self.who_bought = who_bought
+        self.name = name
+        self.id = id
+        self.is_current = is_current
+        self.purchase_cost = purchase_cost
+
+
+
+@app.route('/game/auction')
+@check_token
+@check_user_added_to_game
+@check_state(AUCTION)
+def game_auction_req(userSession):
+    '''
+    Functin for request "/game/auction"
+    '''
+    # game.auction.start()
+    # if !game.state() :
+    user = users.getUserById(users.addUser())
+    param = {
+        'user': userSession.user,
+        'lots': [
+            Lot(1, 100, 'gga', 1, userSession.user, False, 91),
+            Lot(1, 100, 'ggb', 1, userSession.user, False, 92),
+            Lot(1, 100, 'ggc', 1, user, True, 93),
+            Lot(1, 100, 'ggd', 1, user, False, 94),
+            Lot(1, 100, 'gge', 1, None, False, 95),
+        ],
+        'cur_lot': Lot(1, 100, 'ggc', 1, None, True, 71)
+    }
+    return render_template('auction_template.html', **param)
 
 @app.route('/authorization')
 def authorization_req():
@@ -164,20 +194,20 @@ def api_check_for_waiting_req():
         if not game.userAddedToGame(userSession):
             ans = {'access': False}
         else:
-            game.waiting_for_player.close_state()
             ans = {
                 'access': True,
                 'current_players_count': game.players_count,
                 'need_players_count': game.needPlayersCount,
-                'timer_is_active': game.waiting_for_player.state(WAITING_FOR_PLAYER__COUNTER_DOWN)
+                'timer_is_active': game.waiting_for_player.state(WAITING_FOR_PLAYER__COUNTER_DOWN),
+                'state_closed': game.waiting_for_player.close_state()
             }
             if game.waiting_for_player.state(WAITING_FOR_PLAYER__COUNTER_DOWN):
                 ans['left_time'] = game.waiting_for_player.counterDown.left_time.seconds
     return jsonify(ans)
 
 
-@app.route('/game/api/check_and_close_state')
-def api_check_and_close_state_req():
+@app.route('/game/api/check_for_preparing')
+def api_check_for_preparing_req():
     if not condition_truly_token():
         ans = {'access': False}
     else:
@@ -185,9 +215,9 @@ def api_check_and_close_state_req():
         if not game.userAddedToGame(userSession):
             ans = {'access': False}
         else:
-            game.waiting_for_player.close_state()
             ans = {
                 'access': True,
+                'state_closed': game.preparing_for_game.close_state()
             }
 
     return jsonify(ans)
