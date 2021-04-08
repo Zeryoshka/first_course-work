@@ -11,9 +11,15 @@ function renderPage(left_time) {
         if (minutes.length < 1)
             minutes = '0' + minutes;
         $('#left-time').text(minutes + ':' + seconds);
-        console.log(minutes + ':' + seconds);
         setTimeout(renderPage, 1000, left_time - 1);
     }
-    else
-        window.location.href = './auction';
+    else {
+        $.get("api/check_for_preparing").done(function(response){
+            if (!response.access)
+                window.location.reload();
+            if (response.state_closed)
+                window.location.href = './auction';
+            setTimeout(renderPage, 100, left_time);
+        });
+    }
 }
