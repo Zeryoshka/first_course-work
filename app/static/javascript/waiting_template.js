@@ -3,7 +3,6 @@ var fnc = setInterval(function(){
         method: "GET",
         url: "api/check_for_waiting"
     }).done(function (response) {
-        console.log(response);
         if (!response.access)
             window.location.reload();
         else {
@@ -24,10 +23,12 @@ function tikTak(left_time) {
         setTimeout(tikTak, 1000, left_time - 1);
     }
     else
-        $.get("api/check_and_close_state").done(function(response){
+        $.get("api/check_for_waiting").done(function(response){
             if (!response.access)
                 window.location.reload();
-            window.location.href = './preparing_for_game';
+            if (response.state_closed)
+                window.location.href = './preparing_for_game';
+            setTimeout(tikTak, 100, left_time);
         });
 }
 
