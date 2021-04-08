@@ -28,8 +28,7 @@ class Preparing_for_game:
         '''
         if self.counterDown.finished and self.game.state(PREPARING_FOR_GAME):
             self.game.next_state()
-            print('****************************************************************************************************************')
-        return self.game.state(WAITING_FOR_PLAYER)
+        return not self.game.state(PREPARING_FOR_GAME)
 
     def getLotsDataAdress(self):
         '''

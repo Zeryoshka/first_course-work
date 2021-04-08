@@ -60,9 +60,9 @@ class Waiting_for_player:
 
     def close_state(self):
         '''
-        It needs for close state in case end of state
+        It needed for close state in case end of state
         '''
         if self.counterDown.finished and self.game.state(WAITING_FOR_PLAYER):
             self.game.next_state()
 
-        return self.game.state(WAITING_FOR_PLAYER)
+        return not self.game.state(WAITING_FOR_PLAYER)
