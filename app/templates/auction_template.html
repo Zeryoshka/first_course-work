@@ -24,7 +24,7 @@
                     {% endif %}
                 "
                 >
-                    <div class="lot__number">{{lot.id}}</div>
+                    <div class="lot__number">{{lot.id}})</div>
                     <div class="lot__name">{{lot.name}}</div>
                     <div class="lot__team">
                         {% if lot.is_current == True or lot.who_bought is none %}
@@ -34,7 +34,7 @@
                         {% endif %}
                     </div>
                     <div class="lot__price">
-                        {% if lot.who_bought is none %}
+                        {% if lot.is_current == True or lot.who_bought is none %}
                             0
                         {% else %}
                             {{lot.purchase_cost}}
