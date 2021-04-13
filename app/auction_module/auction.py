@@ -8,7 +8,7 @@ class Auction:
         self.actual_lots = []
         self.sold_lots = []
 
-    def parsing(self):
+    def parsing(self):  # парсинг из цсв в список и предварительная обработка лотов
         csv_name = 'app/auction_module/test.csv'
         with open(csv_name) as csv_file:
             tmp = csv.reader(csv_file)
@@ -31,20 +31,7 @@ class Auction:
             else:
                 assert 'Кривые данные'
 
-    def export_as_json(self):
-        return json.dumps(self.actual_lots + self.sold_lots)
-
-    def analysing_bets(self, json_str):  # в строке "id игрока": "ставка"
-        self.actual_lots[0].who_can_bid = list(
-            json_str.keys)  # тут вообще словарь, а еще не работает так, как нужно, исправить
-        pass  # хитрый анализ с выбором достойного
-
-    def end_auction(self):
-        self.actual_lots[0].status = 'sold'
-        self.sold_lots.append(self.actual_lots[0])
-        del (self.actual_lots[0])
-
-    def return_lots_list(self):
+    def export_as_json(self):  # возвращает json со всей инфой о каждом лоте
         x = []
         for lot in self.actual_lots:
             x.append(lot.return_info())
@@ -52,6 +39,17 @@ class Auction:
         for lot in self.sold_lots:
             x.append(lot.return_info())
 
-        return x
+        return json.dumps(x)
+
+    def analysing_bets(self, bids):  # в приходящем словаре "id игрока": "ставка"
+        self.actual_lots[0].who_can_bid = list(bids.keys)
+        pass  # хитрый анализ с выбором достойного. Мне страшно за него браться
+
+    def end_auction(self):  # метод завершения розыгрыша лота
+        self.actual_lots[0].make_lot_sold()
+        self.sold_lots.append(self.actual_lots[0])
+        del (self.actual_lots[0])
+
+
 
 
