@@ -1,3 +1,13 @@
+
+
+function getTemplate(time) {
+    return `
+        <div id='count_down_block' class='status-block__count-down-block'>
+            Игра начнется через <span id='count_down'>${time}</span>
+        </div>
+    `;
+}
+
 var fnc = setInterval(function(){
     $.ajax({
         method: "GET",
@@ -7,9 +17,9 @@ var fnc = setInterval(function(){
             window.location.reload();
         else {
             $('#current_players_count').text(response.current_players_count);
-            $('#need_players_count').text(response.need_players_count);
             if (response.timer_is_active) {
-                $('#header_text').text('Игра скоро начнется');
+                $('.status-block').empty();
+                $('.status-block').append(getTemplate(10));
                 clearInterval(fnc);
                 startCountDown(response.left_time);
             }
@@ -33,6 +43,7 @@ function tikTak(left_time) {
 }
 
 function startCountDown(left_time) {
-    $('#count_down_block').css('display', 'block');
+    // $('.status-block__message').css('display', 'none');
+    // $('#count_down_block').append(template_counter_down);
     tikTak(left_time);
 }
