@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="preparing-for-game.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="{{url_for('static', filename='javascript/preparing_for_game.js')}}">
+        renderPage({{left_time}});
+    </script>
+    <title>Power Market</title>
+</head>
+<body>
+    <div class="main-container">
+        <h1 class="main-container__header">Power Market</h1>
+        <div class='main-container__status-block status-block'>
+            <p class="status-block__message">Подготовка к игре</p>
+            <div class="status-block__count-down" id="left-time">00:00</div>
+        </div>
+
+        <div class="main-container__links">
+            <a class="main-container__link" href="{{url_for('static', filename=prediction_file)}}" download="">Прогноз</a>
+            <a class="main-container__link" href="{{url_for('static', filename=lots_file)}}" download="">Лоты</a>
+        </div>
+    </div>
+</body>
+</html>
