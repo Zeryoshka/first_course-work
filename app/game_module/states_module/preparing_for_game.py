@@ -1,6 +1,6 @@
 from app.game_module.counter_down import CounterDown
 
-from app.config_module.base_config import NONE_STATE, WAITING_FOR_PLAYER, PREPARING_FOR_GAME, PREPARING_FOR_GAME__TIME
+from app.config_module.base_config import PREPARING_FOR_GAME, PREPARING_FOR_GAME__TIME
 
 class Preparing_for_game:
     '''
@@ -29,15 +29,3 @@ class Preparing_for_game:
         if self.counterDown.finished and self.game.state(PREPARING_FOR_GAME):
             self.game.next_state()
         return not self.game.state(PREPARING_FOR_GAME)
-
-    def getLotsDataAdress(self):
-        '''
-        Method for getting information about Lots in needed format
-        '''
-        return self.game.lots_file
-
-    def getWetaherPredictionData(self, game):
-        '''
-        Method for getting information about weather prediction in needed format
-        '''
-        return self.game.weathercast_file
