@@ -16,7 +16,7 @@ class Auction:
 
     def parsing(self):  # парсинг из цсв в список и предварительная обработка лотов
         csv_name = 'app/auction_module/test.csv' # TODO: Убери в конфиги, не позорься!!!
-        with open(csv_name, encoding='utf-8') as csv_file:
+        with open(csv_name, encoding='utf-8') as csv_file:  ## Да не позорюсь я, это заготовка!!!
             tmp = csv.DictReader(csv_file)
             for row in tmp:
                 self.actual_lots.append(Lot(**row))
@@ -43,7 +43,7 @@ class Auction:
                 # И преобразовать cost и всякое такое к числам
                 # Можешь отдельный модуль конфигов пределать к текущему пакету конфигов, чтобы был чисто для аукциона
 
-    def export_as_json(self):  # возвращает json со всей инфой о каждом лоте
+    def export_data(self):  # возвращает json со всей инфой о каждом лоте
         x = []
         for lot in self.actual_lots:
             x.append(lot.return_info())
@@ -51,7 +51,7 @@ class Auction:
         for lot in self.sold_lots:
             x.append(lot.return_info())
 
-        return json.dumps(x)
+        return x
 
     def analysing_bets(self, bids):  # в приходящем словаре "id игрока": "ставка"
         self.actual_lots[0].who_can_bid = list(bids.keys) # Почему 0!?!?!?!?!?!?
