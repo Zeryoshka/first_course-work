@@ -48,7 +48,7 @@ class Waiting_for_player:
         '''
         Method for delete user with_died session form players
         '''
-        for i, player in enumerate(self.game.players):
+        for player in self.game.players:
             if not player.userSession.isActive():
                 del player
 
