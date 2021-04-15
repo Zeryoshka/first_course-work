@@ -15,8 +15,7 @@ class Lot:
         self.min_start_cost = min_cost
         self.max_cost = max_cost
         self.max_start_cost = max_cost
-        self.who_can_bid = userSessions.exportSessions()  # не придумал, как проверить. Если приходит список, все ок
-        self.is_current = False
+        self.who_can_bid = userSessions.exportSessions()  # не придумал, как проверить. Если приходит список, все ок    
 
     def make_lot_current(self):  # trivia
         self.is_current = True

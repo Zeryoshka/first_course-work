@@ -1,3 +1,5 @@
+from app.config_module.base_config import AUCTION
+
 from lot import Lot
 import json
 import csv
@@ -10,9 +12,22 @@ import csv
 # А как ставку сдлеать?
 # А где render_param, чтобы параметры для страничек делать?
 class Auction:
-    def __init__(self):
+    def __init__(self, game):
+        self._is_started = False
+        self.game = game
         self.actual_lots = []
-        self.sold_lots = []
+
+    def start(self):
+        if (not self._is_started) and self.game.state(AUCTION):
+            self._is_started = True
+            self._cur_lot_num = 0
+            self.сur_lot_round = 1
+
+        return self._is_statred
+
+    @property
+    def cur_lot(self):
+        return self.actual_lots[self._cur_lot_num]
 
     def parsing(self):  # парсинг из цсв в список и предварительная обработка лотов
         csv_name = 'app/auction_module/test.csv' # TODO: Убери в конфиги, не позорься!!!
@@ -53,11 +68,19 @@ class Auction:
 
         return json.dumps(x)
 
+    #TODO Это правильнее будет запихать в сам лот,
+    #метод будет возвращать список юзеров, которые могут дальше бодаться
+    # Причем в make_lot_sold()
     def analysing_bets(self, bids):  # в приходящем словаре "id игрока": "ставка"
         self.actual_lots[0].who_can_bid = list(bids.keys) # Почему 0!?!?!?!?!?!?
         # хитрый анализ с выбором достойного. Мне страшно за него браться
-
-    def end_auction(self):  # метод завершения розыгрыша лота
-        self.actual_lots[0].make_lot_sold()# Почему 0!?!?!?!?!?!?
-        self.sold_lots.append(self.actual_lots[0])# Почему 0!?!?!?!?!?!?
-        del (self.actual_lots[0])# Почему 0!?!?!?!?!?!?
+    #PS Я понял, почему 0, но только есть проблема, надо список лотов возвращать сратничке,
+    #поэтому нельзя удалять лоты
+    #По этой же причине нам не нужен список проданных (После аукциона все будут проданы)
+    
+    def sell_lot(self):  # метод завершения розыгрыша лота
+        users_in_game = self.actual_lots[self._cur_lot_num].make_lot_sold()# Почему 0!?!?!?!?!?!?
+        if len(users_in_game) == 1:
+            self._cur_lot_num += 1
+            self.сur_lot_round = 1
+        self.set_new_lot_round() # TODO на случай запуска второго раунда надо дописать

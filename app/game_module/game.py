@@ -1,15 +1,10 @@
-from app.game_module.player import Player
-from .counter_down import CounterDown
 from .states_module.waiting_for_player import Waiting_for_player
 from .states_module.preparing_for_game import Preparing_for_game
+from .states_module.auction_module.auction import Auction
 
 from app.config_module.base_config import NONE_STATE, WAITING_FOR_PLAYER, PREPARING_FOR_GAME, \
     AUCTION, EMULATION, RESULTS, COUNT_DOWN_BEFORE_PREPARING
-from app.config_module.base_config import WAITING_FOR_PLAYER__COUNTER_DOWN, WAITING_FOR_PLAYER__WAIT
-from app.config_module.base_config import COUNT_DOWN_BEFORE_PREPARING__TIME
 from app.config_module.base_config import LOTS_FILE, WEATHERCAST_FILE
-
-from datetime import datetime, timedelta
 
 
 class Game():
@@ -26,6 +21,7 @@ class Game():
         self.players = []
         self.waiting_for_player = Waiting_for_player(self)
         self.preparing_for_game = Preparing_for_game(self)
+        self.auction = Auction(self)
         self._lots_file = LOTS_FILE
         self._weathercast_file = WEATHERCAST_FILE
 
