@@ -1,4 +1,4 @@
-from app.auction_module.lot import Lot
+from lot import Lot
 import json
 import csv
 
@@ -24,15 +24,24 @@ class Auction:
             for lot in self.actual_lots:
                 print(lot.return_info())
 
+        #TODO Почему проверка идет после того, как лоты были созданы? Логичнее всего это встроить в сам Lot
+        #Зачем ты переобъявляешь параметры? Зачем тогда вообще lot нужен?
         for lot in self.actual_lots:
             if lot.lot_type == 'producer':
-                lot.min_cost = 1
-                lot.max_cost = 100
+                lot.min_cost = 1 # Вот это вот зачем?
+                lot.max_cost = 100 # Вот это вот зачем?
             elif lot.lot_type == 'consumer':
-                lot.min_cost = 1
-                lot.max_cost = 10
+                lot.min_cost = 1 # Вот это вот зачем?
+                lot.max_cost = 10 # Вот это вот зачем?
             else:
                 assert False, 'Кривые данные'
+                # Топ вариант для проверки:
+                # assert lot_type in ['producer', 'consumer'], 'Parse error'
+                # (Понятно, что массивчик достается из конфигов)
+                # А еще надо проверить тип аукциона, это же тоже строка!!
+                # Еще все параметры, кроме разве что name
+                # И преобразовать cost и всякое такое к числам
+                # Можешь отдельный модуль конфигов пределать к текущему пакету конфигов, чтобы был чисто для аукциона
 
     def export_as_json(self):  # возвращает json со всей инфой о каждом лоте
         x = []
