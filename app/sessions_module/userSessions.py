@@ -24,7 +24,7 @@ class UserSessions():
         for session in self._sessions:
             if session.token == token:
                 return session
-        assert (False)
+        assert False
 
     def exportSessions(self):
         return self._sessions
