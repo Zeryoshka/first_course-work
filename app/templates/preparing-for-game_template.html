@@ -5,10 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="preparing-for-game.css">
+    <link rel="stylesheet" href="{{url_for('static', filename='preparing-for-game/preparing-for-game.css')}}">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="{{url_for('static', filename='javascript/preparing_for_game.js')}}">
+        console.log('import');
+    </script>
+    <script>
         renderPage({{left_time}});
     </script>
     <title>Power Market</title>
@@ -26,5 +29,9 @@
             <a class="main-container__link" href="{{url_for('static', filename=lots_file)}}" download="">Лоты</a>
         </div>
     </div>
+
+    <script>
+        renderPage({{left_time}});
+    </script>
 </body>
 </html>
