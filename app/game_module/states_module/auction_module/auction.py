@@ -21,7 +21,7 @@ class Auction:
         if (not self._is_started) and self.game.state(AUCTION):
             self._is_started = True
             self._cur_lot_num = 0
-            self.сur_lot_round = 1
+            self.cur_lot_round = 1
 
         return self._is_statred
 
@@ -82,5 +82,5 @@ class Auction:
         users_in_game = self.actual_lots[self._cur_lot_num].make_lot_sold()# Почему 0!?!?!?!?!?!?
         if len(users_in_game) == 1:
             self._cur_lot_num += 1
-            self.сur_lot_round = 1
+            self.cur_lot_round = 1
         self.set_new_lot_round() # TODO на случай запуска второго раунда надо дописать
