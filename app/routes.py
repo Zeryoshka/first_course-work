@@ -153,19 +153,11 @@ def game_auction_req(userSession):
     '''
     Functin for request "/game/auction"
     '''
-    # game.auction.start()
-    # if !game.state() :
-    user = users.getUserById(users.addUser())
+    game.auction.start()
     param = {
         'user': userSession.user,
-        'lots': [
-            Lot(1, 100, 'gga', 1, userSession.user, False, 91),
-            Lot(1, 100, 'ggb', 1, userSession.user, False, 92),
-            Lot(1, 100, 'ggc', 1, user, True, 93),
-            Lot(1, 100, 'ggd', 1, user, False, 94),
-            Lot(1, 100, 'gge', 1, None, False, 95),
-        ],
-        'cur_lot': Lot(1, 100, 'ggc', 1, None, True, 71)
+        'lots': game.auction.actual_lots,
+        'cur_lot': game.auction.cur_lot
     }
     return render_template('auction_template.html', **param)
 
