@@ -61,6 +61,9 @@ class Game():
                 return True
         return False
 
+    def players_list(self):
+        return self.players
+
     @property
     def players_count(self):
         '''
@@ -69,8 +72,8 @@ class Game():
         return len(self.players)
 
     @property
-    def needPlayersCount(slef):
+    def needPlayersCount(self):
         '''
         Property for get needed players count
         '''
-        return slef._needPlayersCount
+        return self._needPlayersCount

@@ -17,6 +17,15 @@ class Lot:
         self.max_start_cost = max_cost
         self.who_can_bid = userSessions.exportSessions()  # не придумал, как проверить. Если приходит список, все ок    
 
+        if self.lot_type == 'producer':
+            self.min_cost = 1
+            self.max_cost = 10
+        elif self.lot_type == 'consumer':
+            self.min_cost = 1
+            self.max_cost = 10
+        else:
+            assert lot_type in ['producer', 'consumer'], 'Parse error'
+
     def make_lot_current(self):  # trivia
         self.is_current = True
 
