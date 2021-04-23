@@ -73,15 +73,15 @@ class Auction:
         self._cur_lot_num += 1
         self.bet_counter_down.start()
 
-    def make_bet(self, user, price):
+    def make_bet(self, player, price):
         '''
         Сделать ставку на текущий лот
         '''
-        if self.cur_lot.valid(user, price):
-            self.cur_lot.add_bet(user, price)
+        if self.cur_lot.valid(player, price):
+            self.cur_lot.add_bet(player, price)
 
-    def sell_lot(self):  # метод завершения розыгрыша лота
-        users_in_game = self.actual_lots[self._cur_lot_num].make_lot_sold()  # Почему 0!?!?!?!?!?!?
+    def sell_lot(self): # метод завершения розыгрыша лота
+        users_in_game = self.actual_lots[self._cur_lot_num].make_lot_sold() # Почему 0!?!?!?!?!?!?
         if len(users_in_game) == 1:
             self._cur_lot_num += 1
             self.cur_lot_round = 1
