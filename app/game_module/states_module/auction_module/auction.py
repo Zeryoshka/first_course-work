@@ -39,8 +39,8 @@ class Auction:
         with open(csv_name, encoding='utf-8') as csv_file:
             tmp = csv.DictReader(csv_file)
             for row in tmp:
-                self.actual_lots.append(Lot(**row))
-
+                self.actual_lots.append(Lot(self.game.players,**row))
+                
                 # А еще надо проверить тип аукциона, это же тоже строка!!
                 # Еще все параметры, кроме разве что name
                 # И преобразовать cost и всякое такое к числам

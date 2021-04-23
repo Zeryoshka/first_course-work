@@ -1,8 +1,6 @@
-from app import userSessions
-
-
 class Lot:
-    def __init__(self, lot_id, lot_name, lot_type, auction_type, min_cost, max_cost):
+    def __init__(self, players, lot_id, lot_name, lot_type, auction_type, min_cost, max_cost):
+        assert lot_type in ['producer', 'consumer'], 'Parse error'
         self.id = lot_id
         self.name = lot_name
         self.lot_type = lot_type
@@ -15,19 +13,22 @@ class Lot:
         self.min_start_cost = min_cost
         self.max_cost = max_cost
         self.max_start_cost = max_cost
-        self.who_can_bid = userSessions.exportSessions()  # не придумал, как проверить. Если приходит список, все ок    
-
-        if self.lot_type == 'producer':
-            self.min_cost = 1
-            self.max_cost = 10
-        elif self.lot_type == 'consumer':
-            self.min_cost = 1
-            self.max_cost = 10
-        else:
-            assert lot_type in ['producer', 'consumer'], 'Parse error'
+        self.who_can_bet = players # не придумал, как проверить. Если приходит список, все ок
 
     def make_lot_current(self):  # trivia
         self.is_current = True
+
+    def valid(self, player, price):
+        '''
+        Проверка коректности ставки
+        '''
+        if not (player in self.who_can_bet):
+            return False
+        if not (self.min_cost < price < self.max_cost):
+            return False
+        return True
+
+        
 
 # TODO А как понять, кто купил?
 # TODO Как потом это в эмуляцию добавить? (Это пока не горит)
@@ -49,5 +50,5 @@ class Lot:
             'max_cost': self.max_cost,
             'max_start_cost': self.max_start_cost,
             'auction_type': self.auction_type,
-            'who_can_bid': self.who_can_bid
+            'who_can_bid': self.who_can_bet
         }
