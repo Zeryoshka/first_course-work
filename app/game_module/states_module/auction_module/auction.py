@@ -1,6 +1,8 @@
 from app.config_module.base_config import AUCTION
-import auction_config
-from lot import Lot
+from app.config_module.base_config import BET__TIME
+
+from .lot import Lot
+from app.game_module.counter_down import CounterDown
 import csv
 
 # Метод start для ацкциона, чтобы начинать
@@ -16,13 +18,17 @@ class Auction:
         self._is_started = False
         self.game = game
         self.actual_lots = []
-        self._cur_lot_num = 0
-        self.cur_lot_round = 1
+        self._cur_lot_num = -1
+        self.bet_counter_down = CounterDown(BET__TIME)
 
     def start(self):
         if (not self._is_started) and self.game.state(AUCTION):
             self._is_started = True
         return self._is_started
+
+    def close_state(self):
+        if self._is_started and self._cur_lot_num == len(self.actual_lots):
+            self.game.state += 1
 
     @property
     def cur_lot(self):
@@ -57,9 +63,26 @@ class Auction:
 
     # PS Есть проблема, надо список лотов возвращать сратничке
 
+    def start_next_lot_at_auction(self):
+        '''
+        Установка нового лота в качестве текущего на аукцион
+        '''
+        if self._cur_lot_num == len(self.actual_lots):
+            self.game.close_state()
+            return
+        self._cur_lot_num += 1
+        self.bet_counter_down.start()
+
+    def make_bet(self, user, price):
+        '''
+        Сделать ставку на текущий лот
+        '''
+        if self.cur_lot.valid(user, price):
+            self.cur_lot.add_bet(user, price)
+
     def sell_lot(self):  # метод завершения розыгрыша лота
         users_in_game = self.actual_lots[self._cur_lot_num].make_lot_sold()  # Почему 0!?!?!?!?!?!?
         if len(users_in_game) == 1:
             self._cur_lot_num += 1
             self.cur_lot_round = 1
-        self.set_new_lot_round()  # TODO на случай запуска второго раунда надо дописать
+        # self.set_new_lot_round()  # TODO на случай запуска второго раунда надо дописать
