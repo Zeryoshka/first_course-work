@@ -18,12 +18,15 @@ class Auction:
         self._is_started = False
         self.game = game
         self.actual_lots = []
+        self.parsing()
         self._cur_lot_num = -1
         self.bet_counter_down = CounterDown(BET__TIME)
 
     def start(self):
         if (not self._is_started) and self.game.state(AUCTION):
             self._is_started = True
+            self._cur_lot_num = 0
+            self.bet_counter_down.start()
         return self._is_started
 
     def close_state(self):
@@ -38,7 +41,7 @@ class Auction:
         '''
         парсинг из csv в список и предварительная обработка лотов
         '''
-        csv_name = 'app/auction_module/test.csv'  # TODO: Убери в конфиги, не позорься!!!
+        csv_name = 'app/static/game-param/lots.csv'  # TODO: Убери в конфиги, не позорься!!!
         with open(csv_name, encoding='utf-8') as csv_file:
             tmp = csv.DictReader(csv_file)
             for row in tmp:
@@ -62,15 +65,6 @@ class Auction:
     # метод будет возвращать список юзеров, которые могут дальше бодаться
     # Причем в make_lot_sold()
 
-    def analysing_bets(self, bids): 
-        '''
-        в приходящем словаре "id игрока": "ставка"
-        '''
-        self.actual_lots[0].who_can_bid = list(bids.keys)
-        # хитрый анализ с выбором достойного. Мне страшно за него браться
-
-    # PS Есть проблема, надо список лотов возвращать сратничке
-
     def start_next_lot_at_auction(self):
         '''
         Установка нового лота в качестве текущего на аукцион
@@ -81,18 +75,23 @@ class Auction:
         self._cur_lot_num += 1
         self.bet_counter_down.start()
 
-    def make_bet(self, player, price):
+    def make_bet(self, user, lot_id, price):
         '''
         Сделать ставку на текущий лот
         '''
-        if self.cur_lot.valid(player, price):
-            self.cur_lot.add_bet(player, price)
+        player = self.game.get_player_by_user(user)
+        if lot_id != self.cur_lot.id:
+            return (False, 'incorrect lot_id')
+        if not self.cur_lot.valid(player, price):
+            return (False, 'incorrect price')
+        self.cur_lot.add_bet(player, price)
+        return (True, 'bet is correctly')
 
-    def sell_lot(self):
+    def sell_lot(self, cur_lot):
         '''
         метод завершения розыгрыша лота
         '''
-        users_in_game = self.actual_lots[self._cur_lot_num].make_lot_sold() # Почему 0!?!?!?!?!?!?
+        users_in_game = self.cur_lot.make_lot_sold()
         if len(users_in_game) == 1:
             self._cur_lot_num += 1
             self.cur_lot_round = 1
