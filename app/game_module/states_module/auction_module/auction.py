@@ -26,6 +26,7 @@ class Auction:
         if (not self._is_started) and self.game.state(AUCTION):
             self._is_started = True
             self._cur_lot_num = 0
+            self.bet_counter_down_lot_num = 0
             self.bet_counter_down.start()
         return self._is_started
 
@@ -65,14 +66,24 @@ class Auction:
     # метод будет возвращать список юзеров, которые могут дальше бодаться
     # Причем в make_lot_sold()
 
+    def check_change_lot(self):
+        '''
+        Проверка смены лота
+        '''
+        if self.bet_counter_down.finished:
+            self.bet_counter_down.clear()
+            buyers_list = self.cur_lot.get_wins_buyers()
+            if len(buyers_list) == 1:
+                self.cur_lot.make_lot_sold()
+
     def start_next_lot_at_auction(self):
         '''
         Установка нового лота в качестве текущего на аукцион
         '''
+        self._cur_lot_num += 1
         if self._cur_lot_num == len(self.actual_lots):
             self.game.close_state()
             return
-        self._cur_lot_num += 1
         self.bet_counter_down.start()
 
     def make_bet(self, user, lot_id, price):
@@ -86,13 +97,5 @@ class Auction:
             return (False, 'incorrect price')
         self.cur_lot.add_bet(player, price)
         return (True, 'bet is correctly')
-
-    def sell_lot(self, cur_lot):
-        '''
-        метод завершения розыгрыша лота
-        '''
-        users_in_game = self.cur_lot.make_lot_sold()
-        if len(users_in_game) == 1:
-            self._cur_lot_num += 1
-            self.cur_lot_round = 1
+        
         # self.set_new_lot_round()  # TODO на случай запуска второго раунда надо дописать
