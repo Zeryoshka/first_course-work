@@ -1,3 +1,5 @@
+from config_module.base_config import HOLLAND__AUCTION_TYPE, ENGLAND__AUCTION_TYPE
+
 class Lot:
     def __init__(self, players, lot_id, lot_name, lot_type, auction_type, min_cost, max_cost):
         assert lot_type in ['producer', 'consumer'], 'Parse error'

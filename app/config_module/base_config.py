@@ -29,6 +29,12 @@ WAITING_FOR_PLAYER__COUNTER_DOWN = 1
 STATIC_FOLDER = 'static'  # Папка со статическими файлам
 TEMPLATE_FOLDER = 'templates'
 
+
 # Файлы
-LOTS_FILE = 'game_param/lots.svg'
-WEATHERCAST_FILE = 'game_param/weather.svg'
+LOTS_FILE = 'game_param/lots.csv'
+WEATHERCAST_FILE = 'game_param/weather.csv'
+
+
+# Наименования типов аукционов
+HOLLAND__AUCTION_TYPE = 'dutch'
+ENGLAND__AUCTION_TYPE = 'english'
