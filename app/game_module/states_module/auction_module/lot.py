@@ -14,7 +14,7 @@ class Lot:
         self.max_cost = max_cost
         self.max_start_cost = max_cost
         self.who_can_bet = players # не придумал, как проверить. Если приходит список, все ок
-        self.bets = []
+        self.bets = dict()
         self.auction_round = 1
 
     def make_lot_current(self):  # trivia
@@ -36,13 +36,26 @@ class Lot:
         '''
         self.bets[player.user.id] = price
 
-    def get_who_is():
-                
-# TODO А как понять, кто купил?
-# TODO Как потом это в эмуляцию добавить? (Это пока не горит)
-    def make_lot_sold(self):  # trivia
-        self.is_current = False
-        self.is_purchased = True
+    def make_lot_sold(self):
+        '''
+        Анализ победителя лота
+        '''
+        if self.auction_type == HOLLAND__AUCTION_TYPE:
+            parametr = min(self.bets.values())
+            self.max_cost = parametr
+        elif self.auction_type == ENGLAND__AUCTION_TYPE:
+            parametr = max(self.bets.values())
+            self.min_cost = parametr
+        else:
+            assert False, "Неопознанный тип аукциона"
+        # ids - cписок id player'ов, которые могут продолжать торговать
+        ids = dict(filter(lambda x: x[1] == parametr, self.bets.items())).keys()
+        self.who_can_bet = ids
+        if len(ids) == 1:
+            self.who_bought = ids[0]
+            self.is_current = False
+            self.is_purchased = True
+        return ids
 
     def return_info(self):
         return {
