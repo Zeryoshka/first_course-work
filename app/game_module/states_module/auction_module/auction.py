@@ -75,6 +75,9 @@ class Auction:
             buyers_list = self.cur_lot.get_wins_buyers()
             if len(buyers_list) == 1:
                 self.cur_lot.make_lot_sold()
+                self.start_next_lot_at_auction()
+            else:
+                print('____________НЕСКОЛЬКО ИГРОКОВ____') #TODO Дописать обработку для этого случая
 
     def start_next_lot_at_auction(self):
         '''
@@ -97,5 +100,3 @@ class Auction:
             return (False, 'incorrect price')
         self.cur_lot.add_bet(player, price)
         return (True, 'bet is correctly')
-        
-        # self.set_new_lot_round()  # TODO на случай запуска второго раунда надо дописать
