@@ -9,6 +9,7 @@ class CounterDown:
 
     def __init__(self, time_len):
         assert isinstance(time_len, timedelta)
+        self._remember_time_len = time_len
         self._time_len = time_len
         self._started = False
 
@@ -34,3 +35,7 @@ class CounterDown:
         if datetime.now() - self._start_time < self._time_len:
             return self._time_len - (datetime.now() - self._start_time)
         return timedelta(0)
+    
+    def clear(self):
+        self._time_len = self._remember_time_len
+        self._started = False
