@@ -157,7 +157,8 @@ def game_auction_req(userSession):
     param = {
         'user': userSession.user,
         'lots': game.auction.actual_lots,
-        'cur_lot': game.auction.cur_lot
+        'cur_lot': game.auction.cur_lot,
+        'left_time': game.auction.bet_counter_down.left_time.seconds
     }
     return render_template('auction_template.html', **param)
 
@@ -167,14 +168,48 @@ def authorization_req():
         session['user_token'] = userSessions.addUserSesion(
             users.getUserById(session['user_id']))
         return redirect(url_for('index_req'))
-    else:
-        return redirect(url_for('registration_req'))
+    return redirect(url_for('registration_req'))
 
 
 @app.route('/registration')
 def registration_req():
     session['user_id'] = users.addUser()
     return redirect(url_for('authorization_req'))
+
+@app.route('/game/api/make_bet', methods=['POST'])
+@check_token
+@check_user_added_to_game
+@check_state(AUCTION)
+def api_make_bet_req(userSession):
+    '''
+    Functin for request "/game/api/make_bet"
+    '''
+    game.auction.start()
+    req = dict(request.form)
+    is_successful, message = game.auction.make_bet(userSession.user, req['lot_id'], req['price'])
+    resp = {
+        'is_successful': is_successful,
+        'message': message
+    }
+    return jsonify(resp)
+
+
+@app.route('/game/api/update_lots')
+@check_token
+@check_user_added_to_game
+@check_state(AUCTION)
+def api_make(user_session):
+    '''
+    Functin for request "/game/api/update_lots"
+    '''
+    game.auction.check_change_lot()
+    resp = {
+        'user': user_session.user.id,
+        'lots': game.auction.export_data(),
+        'cur_lot': game.auction.cur_lot.return_info()
+    }
+    return resp
+
 
 
 @app.route('/game/api/check_for_waiting')
