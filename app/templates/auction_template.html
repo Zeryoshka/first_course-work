@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Аукцион</title>
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <link rel="stylesheet" href="{{url_for('static', filename='auction_style.css')}}">
 </head>
 <body>
@@ -45,17 +45,24 @@
         </div>
         <div class="current-lot">
             <div class="current-lot__line">
+                <div class="current-lot__id">
+                    <span class="cur_lot_id">{{cur_lot.id}}</span>)
+                </div>
                 <div class="current-lot__name">{{cur_lot.name}}</div>
             </div>
-                <p>от {{cur_lot.min_cost}} до {{cur_lot.max_cost}}</p>
-                <form action="./">
-                    <label for="rate">Ставка:</label>
-                    <input type="number" step="{{price_step}}" name="rate">
-                    <input type="submit" value="Ввести">
+                <p>
+                    от <span class="min_cost">{{cur_lot.min_cost}}</span> до
+                    <span class="max_cost">{{cur_lot.max_cost}}</span>
+                </p>
+                <form id="bet_form" onsubmit="return false">
+                    <label for="bet_space">Ставка:</label>
+                    <input class="form__bet-space" type="number" step="{{price_step}}" name="bet_space">
+                    <input class="form__submit" type="submit" value="Ввести">
                 </form>
                 <div class="current-lot__timer">10</div>
             </div>
         </div>
     </div>
+    <script src="{{url_for('static', filename='javascript/auction.js')}}"></script>
 </body>
 </html>
