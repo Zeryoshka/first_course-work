@@ -198,7 +198,7 @@ def api_make_bet_req(userSession):
 @check_token
 @check_user_added_to_game
 @check_state(AUCTION)
-def api_make(user_session):
+def api_update_lots_req(userSession):
     '''
     Functin for request "/game/api/update_lots"
     '''
