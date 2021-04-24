@@ -36,26 +36,31 @@ class Lot:
         '''
         self.bets[player.user.id] = price
 
-    def make_lot_sold(self):
+    def get_wins_buyers(self):
+        '''
+        Анализ победителей борьбы за лот и победной цены
+        '''
+        if self.auction_type == HOLLAND__AUCTION_TYPE:
+            price = min(self.bets.values())
+            self.max_cost = price
+        elif self.auction_type == ENGLAND__AUCTION_TYPE:
+            price = max(self.bets.values())
+            self.min_cost = price
+        else:
+            assert False, "Неопознанный тип аукциона"
+
+        # ids - cписок id player'ов, которые могут продолжать торговать
+        ids = dict(filter(lambda x: x[1] == price, self.bets.items())).keys()
+        return ids, price
+
+    def make_lot_sold(self, user, price):
         '''
         Анализ победителя лота
         '''
-        if self.auction_type == HOLLAND__AUCTION_TYPE:
-            parametr = min(self.bets.values())
-            self.max_cost = parametr
-        elif self.auction_type == ENGLAND__AUCTION_TYPE:
-            parametr = max(self.bets.values())
-            self.min_cost = parametr
-        else:
-            assert False, "Неопознанный тип аукциона"
-        # ids - cписок id player'ов, которые могут продолжать торговать
-        ids = dict(filter(lambda x: x[1] == parametr, self.bets.items())).keys()
-        self.who_can_bet = ids
-        if len(ids) == 1:
-            self.who_bought = ids[0]
-            self.is_current = False
-            self.is_purchased = True
-        return ids
+        self.who_bought = user
+        self.is_current = False
+        self.is_purchased = True
+        self.purchase_cost = price
 
     def return_info(self):
         return {
