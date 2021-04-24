@@ -77,6 +77,12 @@ body {
     flex-direction: column;
     align-items: center;
 }
+
+.current-lot__line {
+    display: flex;
+    flex-direction: row;
+}
+
 .current-lot__timer {
     border: 1.5px black solid;
     border-radius: 2px;
