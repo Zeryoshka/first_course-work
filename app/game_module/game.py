@@ -5,7 +5,7 @@ from .states_module.auction_module.auction import Auction
 from app.config_module.base_config import NONE_STATE, WAITING_FOR_PLAYER, PREPARING_FOR_GAME, \
     AUCTION, EMULATION, RESULTS, COUNT_DOWN_BEFORE_PREPARING
 from app.config_module.base_config import LOTS_FILE, WEATHERCAST_FILE
-
+from app.config_module.base_config import NEED_PLAYERS_COUNT
 
 class Game():
     '''
@@ -17,7 +17,7 @@ class Game():
         Init function of Game class
         '''
         self._state = WAITING_FOR_PLAYER
-        self._needPlayersCount = 3
+        self._needPlayersCount = NEED_PLAYERS_COUNT
         self.players = []
         self.waiting_for_player = Waiting_for_player(self)
         self.preparing_for_game = Preparing_for_game(self)
@@ -60,6 +60,12 @@ class Game():
             if player.userSession == userSession:
                 return True
         return False
+
+    def get_player_by_user(self, user):
+        for player in self.players:
+            if player.user == user:
+                return player
+        raise ValueError
 
     def players_list(self):
         return self.players
