@@ -57,6 +57,13 @@ function create_lot(id, name, who_bought, price) {
     }).append(lot_id, lot_name, name, who_bought, price);
 }
 
+function create_cur_lot(cur_lot) {
+    $('.cur_lot_id').text(cur_lot.lot_id);
+    $('.current-lot__name').text(cur_lot.lot_name);
+    $('.min_cost').text(cur_lot.min_cost);
+    $('.max_cost').text(cur_lot.max_cost);
+}
+
 function update_page(cur_lot, lots) {
     $('.lots').empty();
     for (var i = 0; i < lots.length; ++i) {
@@ -74,6 +81,8 @@ function update_page(cur_lot, lots) {
         console.log(lots[i]);
         $('.lots').append(lot);
     }
+
+    create_cur_lot(cur_lot);
 }
 
 function get_updates() {
@@ -82,10 +91,13 @@ function get_updates() {
             setTimeout(get_updates, 100);
             return;
         }
-        $.cookie('cur_lot_id', response.cur_lot.lot_id)
+        console.log('gg:')
+        console.log(response.cur_lot.lot_id)
+        $.cookie('cur_lot_id', response.cur_lot.lot_id, {
+            path: '/game/auction'
+        });
         tik_tak(response.left_time);
         update_page(response.cur_lot, response.lots);
-        console.log(response);
     });
 }
 
@@ -99,4 +111,5 @@ function tik_tak(left_time) {
 }
 
 $('.form__submit').click(send_bet);
+console.log($.cookie('cur_lot_id'));
 tik_tak(Number($.cookie('left_time')));

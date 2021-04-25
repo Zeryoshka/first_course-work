@@ -164,9 +164,10 @@ def game_auction_req(userSession):
 
     resp = make_response(render_template('auction_template.html', **param))
     resp.set_cookie('left_time', str(game.auction.bet_counter_down.left_time.seconds), 100)
-    resp.set_cookie('user_id', str(userSession.user.id))
+    resp.set_cookie('user_id', str(userSession.user.id),)
     resp.set_cookie('user_name', str(userSession.user.name))
-    resp.set_cookie('cur_lot_id', str(game.auction.cur_lot.id))
+    resp.set_cookie('cur_lot_id', str(game.auction.cur_lot.id), path='/game/auction')
+    print(game.auction.cur_lot.id)
 
     return resp
 
