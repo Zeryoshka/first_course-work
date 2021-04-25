@@ -2,7 +2,6 @@ function send_bet(event) {
     var min_cost = Number($('.min_cost').text());
     var max_cost = Number($('.max_cost').text());
     var cur_bet = Number($('#bet_form').serializeArray()[0]['value']);
-    console.log(min_cost, max_cost, cur_bet);
     if (cur_bet < min_cost || cur_bet > max_cost){
         alert('Ставка не удовлетворяет текущему условию');
         return false;
@@ -38,4 +37,4 @@ function tik_tak(left_time) {
 }
 
 $('.form__submit').click(send_bet);
-tik_tak(10);
+tik_tak(Number($.cookie('left_time')));

@@ -3,6 +3,7 @@ from flask import request
 from flask import session
 from flask import redirect, url_for
 from flask import jsonify
+from flask import make_response
 
 from functools import wraps
 
@@ -153,14 +154,16 @@ def game_auction_req(userSession):
     '''
     Functin for request "/game/auction"
     '''
-    game.auction.start()
+    game.auction.start()    
     param = {
         'user': userSession.user,
         'lots': game.auction.actual_lots,
         'cur_lot': game.auction.cur_lot,
         'left_time': game.auction.bet_counter_down.left_time.seconds
     }
-    return render_template('auction_template.html', **param)
+    resp = make_response(render_template('auction_template.html', **param))
+    resp.set_cookie('left_time', str(game.auction.bet_counter_down.left_time.seconds), 100)
+    return resp
 
 @app.route('/authorization')
 def authorization_req():

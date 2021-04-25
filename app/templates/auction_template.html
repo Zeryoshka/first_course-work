@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Аукцион</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="{{url_for('static', filename='javascript/jquery.cookie.js')}}"></script>
     <link rel="stylesheet" href="{{url_for('static', filename='auction_style.css')}}">
 </head>
 <body>
@@ -59,7 +60,7 @@
                     <input class="form__bet-space" type="number" step="{{price_step}}" name="bet_space">
                     <input class="form__submit" type="submit" value="Ввести">
                 </form>
-                <div class="current-lot__timer">10</div>
+                <div class="current-lot__timer">{{left_time}}</div>
             </div>
         </div>
     </div>
