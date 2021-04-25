@@ -208,7 +208,7 @@ def api_update_lots_req(userSession):
         'lots': game.auction.export_data(),
         'cur_lot': game.auction.cur_lot.return_info()
     }
-    return resp
+    return jsonify(resp)
 
 
 

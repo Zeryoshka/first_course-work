@@ -74,7 +74,8 @@ class Auction:
             self.bet_counter_down.clear()
             buyers_list, price = self.cur_lot.get_wins_buyers()
             if len(buyers_list) == 1:
-                self.cur_lot.make_lot_sold(buyers_list, price)
+                buyer = buyers_list[0]
+                self.cur_lot.make_lot_sold(buyer, price)
                 self.start_next_lot_at_auction()
             else:
                 print('____________НЕСКОЛЬКО ИГРОКОВ____') #TODO Дописать обработку для этого случая

@@ -53,31 +53,33 @@ class Lot:
 
         # ids - cписок id player'ов, которые могут продолжать торговать
         ids = dict(filter(lambda x: x[1] == price, self.bets.items())).keys()
-        buyers = map(users.getUserById, ids)
+        buyers = list(map(users.getUserById, ids))
         return buyers, price
 
     def make_lot_sold(self, user, price):
         '''
         Анализ победителя лота
         '''
-        self.who_bought = user
-        self.is_current = False
         self.is_purchased = True
+        self.who_bought = user
         self.purchase_cost = price
+        self.is_current = False
 
     def return_info(self):
-        return {
+        data = {
             'lot_id': self.id,
             'lot_name': self.name,
             'lot_type': self.lot_type,
             'is_current': self.is_current,
             'is_purchased': self.is_purchased,
-            'who_bought': self.who_bought,
-            'purchase_cost': self.purchase_cost,
             'min_cost': self.min_cost,
             'min_start_cost': self.min_start_cost,
             'max_cost': self.max_cost,
             'max_start_cost': self.max_start_cost,
             'auction_type': self.auction_type,
-            'who_can_bid': self.who_can_bet
+            'who_can_bid': list(map(lambda x: x.user.id, self.who_can_bet))
         }
+        if data['is_purchased']:
+            data['who_bought'] = self.who_bought.id
+            data['purchase_cost'] = self.purchase_cost
+        return data
