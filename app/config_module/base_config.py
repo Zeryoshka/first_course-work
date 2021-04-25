@@ -5,8 +5,8 @@ SECRET_KEY = 'KEY_KEY'  # Ключ для flask.session
 NEED_PLAYERS_COUNT = 1# Количество игроков
 
 # Константы времени (в секундах)
-COUNT_DOWN_BEFORE_PREPARING__TIME = timedelta(seconds=1)
-PREPARING_FOR_GAME__TIME = timedelta(seconds=1)
+COUNT_DOWN_BEFORE_PREPARING__TIME = timedelta(seconds=0)
+PREPARING_FOR_GAME__TIME = timedelta(seconds=0)
 BET__TIME = timedelta(seconds=10)
 USERSESSION_LIFETIME = 5000  # Время жизни UserSession
 
