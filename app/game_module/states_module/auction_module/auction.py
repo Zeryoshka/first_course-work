@@ -28,6 +28,7 @@ class Auction:
             self._cur_lot_num = 0
             self.bet_counter_down_lot_num = 0
             self.bet_counter_down.start()
+            self.cur_lot.make_lot_current()
         return self._is_started
 
     def close_state(self):
