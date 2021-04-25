@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="{{url_for('static', filename='auction_style.css')}}">
 </head>
 <body>
-    <h1 class="siteName">Аукцион</h1>
+    <h1 class="siteName">Аукцион ({{user.name}})</h1>
     <div class="container">
         <div class="lots">
             {% for lot in lots %}
