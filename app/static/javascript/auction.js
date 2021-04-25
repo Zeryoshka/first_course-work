@@ -23,4 +23,20 @@ function send_bet(event) {
     return false;
 }
 
+// function get_updates() {
+//     $.get('api/lot') {
+
+//     }
+//     return {
+//         left_time: 10,
+//     };
+// }
+
+function tik_tak(left_time) {
+    $('.current-lot__timer').text(left_time);
+    if (left_time > 0)
+        setTimeout(tik_tak, 1000, left_time - 1);
+}
+
 $('.form__submit').click(send_bet);
+tik_tak(10);
