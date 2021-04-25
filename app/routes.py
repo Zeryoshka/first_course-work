@@ -186,7 +186,7 @@ def api_make_bet_req(userSession):
     '''
     game.auction.start()
     req = dict(request.form)
-    is_successful, message = game.auction.make_bet(userSession.user, req['lot_id'], req['price'])
+    is_successful, message = game.auction.make_bet(userSession.user, int(req['lot_id']), int(req['price']))
     resp = {
         'is_successful': is_successful,
         'message': message

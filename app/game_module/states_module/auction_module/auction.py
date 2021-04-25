@@ -87,7 +87,7 @@ class Auction:
         self._cur_lot_num += 1
         if self._cur_lot_num == len(self.actual_lots):
             self.game.close_state()
-            return
+        self.cur_lot.make_lot_current()
         self.bet_counter_down.start()
 
     def make_bet(self, user, lot_id, price):
@@ -97,7 +97,8 @@ class Auction:
         player = self.game.get_player_by_user(user)
         if lot_id != self.cur_lot.id:
             return (False, 'incorrect lot_id')
-        if not self.cur_lot.valid(player, price):
-            return (False, 'incorrect price')
+        is_valid, message = self.cur_lot.valid(player, price)
+        if not is_valid:
+            return (False, message)
         self.cur_lot.add_bet(player, price)
         return (True, 'bet is correctly')

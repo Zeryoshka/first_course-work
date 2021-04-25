@@ -1,5 +1,4 @@
 function send_bet(event) {
-    alert("gg");
     var min_cost = Number($('.min_cost').text());
     var max_cost = Number($('.max_cost').text());
     var cur_bet = Number($('#bet_form').serializeArray()[0]['value']);

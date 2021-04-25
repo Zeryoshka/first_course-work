@@ -3,7 +3,7 @@ from app import users
 class Lot:
     def __init__(self, players, lot_id, lot_name, lot_type, auction_type, min_cost, max_cost):
         assert lot_type in ['producer', 'consumer'], 'Parse error'
-        self.id = lot_id
+        self.id = int(lot_id)
         self.name = lot_name
         self.lot_type = lot_type
         self.auction_type = auction_type
@@ -11,10 +11,10 @@ class Lot:
         self.is_purchased = False
         self.who_bought = None
         self.purchase_cost = None
-        self.min_cost = min_cost
-        self.min_start_cost = min_cost
-        self.max_cost = max_cost
-        self.max_start_cost = max_cost
+        self.min_cost = int(min_cost)
+        self.min_start_cost = int(min_cost)
+        self.max_cost = int(max_cost)
+        self.max_start_cost = int(max_cost)
         self.who_can_bet = players # не придумал, как проверить. Если приходит список, все ок
         self.bets = dict()
         self.auction_round = 1
@@ -27,10 +27,10 @@ class Lot:
         Проверка коректности ставки
         '''
         if not (player in self.who_can_bet):
-            return False
-        if not (self.min_cost < price < self.max_cost):
-            return False
-        return True
+            return False, 'incorrect player'
+        if (self.min_cost > price) or (price > self.max_cost):
+            return False, 'incorrect price'
+        return True, 'correct'
 
     def add_bet(self, player, price):
         '''
