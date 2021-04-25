@@ -23,19 +23,19 @@ function send_bet(event) {
     return false;
 }
 
-// function get_updates() {
-//     $.get('api/lot') {
-
-//     }
-//     return {
-//         left_time: 10,
-//     };
-// }
+function get_updates() {
+    $.get('api/update_lots').done(function(response){
+        console.log(response);
+    });
+}
 
 function tik_tak(left_time) {
     $('.current-lot__timer').text(left_time);
-    if (left_time > 0)
+    if (left_time > 0) {
         setTimeout(tik_tak, 1000, left_time - 1);
+        return;
+    }
+    get_updates();
 }
 
 $('.form__submit').click(send_bet);
