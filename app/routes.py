@@ -154,15 +154,20 @@ def game_auction_req(userSession):
     '''
     Functin for request "/game/auction"
     '''
-    game.auction.start()    
+    game.auction.start()
     param = {
         'user': userSession.user,
         'lots': game.auction.actual_lots,
         'cur_lot': game.auction.cur_lot,
         'left_time': game.auction.bet_counter_down.left_time.seconds
     }
+
     resp = make_response(render_template('auction_template.html', **param))
     resp.set_cookie('left_time', str(game.auction.bet_counter_down.left_time.seconds), 100)
+    resp.set_cookie('user_id', str(userSession.user.id))
+    resp.set_cookie('user_name', str(userSession.user.name))
+    resp.set_cookie('cur_lot_id', str(game.auction.cur_lot.id))
+
     return resp
 
 @app.route('/authorization')
@@ -205,11 +210,13 @@ def api_update_lots_req(userSession):
     '''
     Functin for request "/game/api/update_lots"
     '''
+    game.auction.start()
     game.auction.check_change_lot()
     resp = {
-        'user': userSession.user.id,
+        'user_id': userSession.user.id,
         'lots': game.auction.export_data(),
-        'cur_lot': game.auction.cur_lot.return_info()
+        'cur_lot': game.auction.cur_lot.return_info(),
+        'left_time': game.auction.bet_counter_down.left_time.seconds
     }
     return jsonify(resp)
 
