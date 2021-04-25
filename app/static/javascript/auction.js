@@ -53,14 +53,26 @@ function create_lot(id, name, who_bought, price) {
         text: price
     });
     return $('<div></div>', {
-        class: 'lot__price',
+        class: 'lot',
     }).append(lot_id, lot_name, name, who_bought, price);
 }
 
 function update_page(cur_lot, lots) {
     $('.lots').empty();
-    for (var i = 0; i < lots.length; ++i){
-        $('div.')
+    for (var i = 0; i < lots.length; ++i) {
+        var price = lots[i].is_purchased? lots[i].lot_price : '0';
+        var who_bought = lots[i].is_purchased? lots[i].who_bought : '-';
+        var lot = create_lot(lots[i].lot_id, lots[i].lot_name, lots[i], who_bought, price);
+        if (lots[i].is_current)
+            lot.addClass('lot_type_current');
+        else if (!lots[i].is_purchased)
+            lot.addClass('lot_owner_nobody');
+        else if (lots[i].who_bought == $.cookie('user_id'))
+            lot.addClass('lot_owner_your');
+        else
+            lot.addClass('lot_owner_not-you');
+        console.log(lots[i]);
+        $('.lots').append(lot);
     }
 }
 
@@ -70,7 +82,7 @@ function get_updates() {
             setTimeout(get_updates, 100);
             return;
         }
-        $.cookie('cur_lot_id', response.cur_lot.id)
+        $.cookie('cur_lot_id', response.cur_lot.lot_id)
         tik_tak(response.left_time);
         update_page(response.cur_lot, response.lots);
         console.log(response);
