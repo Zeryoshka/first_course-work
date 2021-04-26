@@ -80,6 +80,7 @@ class Lot:
             'who_can_bid': list(map(lambda x: x.user.id, self.who_can_bet))
         }
         if data['is_purchased']:
-            data['who_bought'] = self.who_bought.id
+            data['who_bought_id'] = self.who_bought.id
+            data['who_bought_name'] = self.who_bought.name
             data['purchase_cost'] = self.purchase_cost
         return data
