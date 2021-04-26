@@ -90,3 +90,15 @@ body {
     margin: 1rem 0 0.5rem;
     width: 1em;
 }
+
+.message-block {
+    height: 3.5rem;
+    margin: 1rem;
+    padding: 3rem 0.5rem;
+    background-color: black;
+    color: white;
+    width: 100%;
+    text-align: left;
+    font-size: 1rem;
+    word-break:break-all;
+}

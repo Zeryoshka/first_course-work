@@ -3,7 +3,7 @@ function send_bet(event) {
     var max_cost = Number($('.max_cost').text());
     var cur_bet = Number($('#bet_form').serializeArray()[0]['value']);
     if (cur_bet < min_cost || cur_bet > max_cost){
-        alert('Ставка не удовлетворяет текущему условию');
+        write_message('Ставка не удовлетворяет текущему условию');
         return false;
     }
     lot_id = Number($.cookie('cur_lot_id'));
@@ -13,27 +13,17 @@ function send_bet(event) {
     };
     $.post('./api/make_bet', request_data).done(function(response){
         if (response.is_successful)
-            alert('Ставка сделана');
+            write_message('Ставка сделана');
         else
-            alert('Ставка не сделана');
+            write_message('Ставка не сделана');
         console.log(response.message);
     })
     return false;
 }
 
-/* <div class="lot 
-                    {% if lot.is_current %}
-                        lot_type_current
-                    {% elif lot.who_bought is none %}
-                        lot_owner_nobody
-                    {% elif lot.who_bought.name == user.name %}
-                        lot_owner_your
-                    {% elif lot.who_bought.name != user.name %}
-                        lot_owner_not-you
-                    {% endif %}
-                "
-                >
-                </div> */
+function write_message(message) {
+    $('.message-block').text(message)
+}
 
 function create_lot(id, name, who_bought, price) {
     var lot_id = $('<div></div>', {
@@ -81,7 +71,6 @@ function update_page(cur_lot, lots) {
             lot.addClass('lot_owner_your');
         else
             lot.addClass('lot_owner_not-you');
-        // console.log(lots[i]);
         $('.lots').append(lot);
     }
 
