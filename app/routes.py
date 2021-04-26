@@ -213,7 +213,13 @@ def api_update_lots_req(userSession):
     '''
     game.auction.start()
     game.auction.check_change_lot()
+    if not game.state(AUCTION):
+        resp = {
+            'is_auction': False
+        }
+        return resp
     resp = {
+        'is_auction': True,
         'user_id': userSession.user.id,
         'lots': game.auction.export_data(),
         'cur_lot': game.auction.cur_lot.return_info(),

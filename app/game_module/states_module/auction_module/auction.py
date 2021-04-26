@@ -33,7 +33,7 @@ class Auction:
 
     def close_state(self):
         if self._is_started and self._cur_lot_num == len(self.actual_lots):
-            self.game.state += 1
+            self.game.next_state()
 
     @property
     def cur_lot(self):
@@ -90,7 +90,8 @@ class Auction:
         '''
         self._cur_lot_num += 1
         if self._cur_lot_num == len(self.actual_lots):
-            self.game.close_state()
+            self.close_state()
+            return
         self.cur_lot.make_lot_current()
         self.bet_counter_down.start()
 

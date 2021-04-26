@@ -79,6 +79,10 @@ function update_page(cur_lot, lots) {
 
 function get_updates() {
     $.get('api/update_lots').done(function(response){
+        if (!response.is_auction){
+            alert('Аукцион окончен');
+            location.reload();
+        }
         if (response.cur_lot.lot_id == $.cookie('cur_lot_id')) {
             setTimeout(get_updates, 100);
             return;
@@ -88,6 +92,9 @@ function get_updates() {
         });
         tik_tak(response.left_time);
         update_page(response.cur_lot, response.lots);
+    }).fail(function(response){
+        alert('Аукцион окончен');
+        location.reload();
     });
 }
 
