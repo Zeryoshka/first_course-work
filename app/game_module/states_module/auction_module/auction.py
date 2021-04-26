@@ -74,6 +74,9 @@ class Auction:
         if self.bet_counter_down.finished:
             self.bet_counter_down.clear()
             buyers_list, price = self.cur_lot.get_wins_buyers()
+            if len(buyers_list) == 0:
+                self.cur_lot.is_current = False
+                self.start_next_lot_at_auction()
             if len(buyers_list) == 1:
                 buyer = buyers_list[0]
                 self.cur_lot.make_lot_sold(buyer, price)

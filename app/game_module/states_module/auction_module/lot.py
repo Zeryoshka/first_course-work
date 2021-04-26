@@ -15,7 +15,7 @@ class Lot:
         self.min_start_cost = int(min_cost)
         self.max_cost = int(max_cost)
         self.max_start_cost = int(max_cost)
-        self.who_can_bet = players # не придумал, как проверить. Если приходит список, все ок
+        self.who_can_bet = players
         self.bets = dict()
         self.auction_round = 1
 
@@ -42,6 +42,8 @@ class Lot:
         '''
         Анализ победителей борьбы за лот и победной цены
         '''
+        if len(self.bets.values()) == 0:
+            return [], None
         if self.auction_type == HOLLAND__AUCTION_TYPE:
             price = min(self.bets.values())
             self.max_cost = price
