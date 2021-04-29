@@ -1,17 +1,17 @@
-function send_bet(event) {
+function send_bid(event) {
     var min_cost = Number($('.min_cost').text());
     var max_cost = Number($('.max_cost').text());
-    var cur_bet = Number($('#bet_form').serializeArray()[0]['value']);
-    if (cur_bet < min_cost || cur_bet > max_cost){
+    var cur_bid = Number($('#bid_form').serializeArray()[0]['value']);
+    if (cur_bid < min_cost || cur_bid > max_cost){
         write_message('Ставка не удовлетворяет текущему условию');
         return false;
     }
     lot_id = Number($.cookie('cur_lot_id'));
     request_data = {
         lot_id: lot_id,
-        price: cur_bet,
+        price: cur_bid,
     };
-    $.post('./api/make_bet', request_data).done(function(response){
+    $.post('./api/make_bid', request_data).done(function(response){
         if (response.is_successful)
             write_message('Ставка сделана');
         else
@@ -107,6 +107,6 @@ function tik_tak(left_time) {
     get_updates();
 }
 
-$('.form__submit').click(send_bet);
+$('.form__submit').click(send_bid);
 console.log($.cookie('cur_lot_id'));
 tik_tak(Number($.cookie('left_time')));

@@ -1,5 +1,5 @@
 from app.config_module.base_config import AUCTION
-from app.config_module.base_config import BET__TIME
+from app.config_module.base_config import BID__TIME
 
 from .lot import Lot
 from app.game_module.counter_down import CounterDown
@@ -20,14 +20,13 @@ class Auction:
         self.actual_lots = []
         self.parsing()
         self._cur_lot_num = -1
-        self.bet_counter_down = CounterDown(BET__TIME)
+        self.bid_counter_down = CounterDown(BID__TIME)
 
     def start(self):
         if (not self._is_started) and self.game.state(AUCTION):
             self._is_started = True
             self._cur_lot_num = 0
-            self.bet_counter_down_lot_num = 0
-            self.bet_counter_down.start()
+            self.bid_counter_down.start()
             self.cur_lot.make_lot_current()
         return self._is_started
 
@@ -71,8 +70,8 @@ class Auction:
         '''
         Проверка смены лота
         '''
-        if self.bet_counter_down.finished:
-            self.bet_counter_down.clear()
+        if self.bid_counter_down.finished:
+            self.bid_counter_down.clear()
             buyers_list, price = self.cur_lot.get_wins_buyers()
             if len(buyers_list) == 0:
                 self.cur_lot.is_current = False
@@ -93,9 +92,9 @@ class Auction:
             self.close_state()
             return
         self.cur_lot.make_lot_current()
-        self.bet_counter_down.start()
+        self.bid_counter_down.start()
 
-    def make_bet(self, user, lot_id, price):
+    def make_bid(self, user, lot_id, price):
         '''
         Сделать ставку на текущий лот
         '''
@@ -105,5 +104,5 @@ class Auction:
         is_valid, message = self.cur_lot.valid(player, price)
         if not is_valid:
             return (False, message)
-        self.cur_lot.add_bet(player, price)
-        return (True, 'bet is correctly')
+        self.cur_lot.add_bid(player, price)
+        return (True, 'bid is correctly')

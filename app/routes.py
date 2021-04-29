@@ -159,11 +159,11 @@ def game_auction_req(userSession):
         'user': userSession.user,
         'lots': game.auction.actual_lots,
         'cur_lot': game.auction.cur_lot,
-        'left_time': game.auction.bet_counter_down.left_time.seconds
+        'left_time': game.auction.bid_counter_down.left_time.seconds
     }
 
     resp = make_response(render_template('auction_template.html', **param))
-    resp.set_cookie('left_time', str(game.auction.bet_counter_down.left_time.seconds), 100)
+    resp.set_cookie('left_time', str(game.auction.bid_counter_down.left_time.seconds), 100)
     resp.set_cookie('user_id', str(userSession.user.id),)
     resp.set_cookie('user_name', str(userSession.user.name))
     resp.set_cookie('cur_lot_id', str(game.auction.cur_lot.id), path='/game/auction')
@@ -185,17 +185,17 @@ def registration_req():
     session['user_id'] = users.addUser()
     return redirect(url_for('authorization_req'))
 
-@app.route('/game/api/make_bet', methods=['POST'])
+@app.route('/game/api/make_bid', methods=['POST'])
 @check_token
 @check_user_added_to_game
 @check_state(AUCTION)
-def api_make_bet_req(userSession):
+def api_make_bid_req(userSession):
     '''
-    Functin for request "/game/api/make_bet"
+    Functin for request "/game/api/make_bid"
     '''
     game.auction.start()
     req = dict(request.form)
-    is_successful, message = game.auction.make_bet(userSession.user, int(req['lot_id']), int(req['price']))
+    is_successful, message = game.auction.make_bid(userSession.user, int(req['lot_id']), int(req['price']))
     resp = {
         'is_successful': is_successful,
         'message': message
@@ -223,7 +223,7 @@ def api_update_lots_req(userSession):
         'user_id': userSession.user.id,
         'lots': game.auction.export_data(),
         'cur_lot': game.auction.cur_lot.return_info(),
-        'left_time': game.auction.bet_counter_down.left_time.seconds
+        'left_time': game.auction.bid_counter_down.left_time.seconds
     }
     return jsonify(resp)
 

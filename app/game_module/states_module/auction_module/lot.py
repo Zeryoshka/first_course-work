@@ -15,8 +15,8 @@ class Lot:
         self.min_start_cost = int(min_cost)
         self.max_cost = int(max_cost)
         self.max_start_cost = int(max_cost)
-        self.who_can_bet = players
-        self.bets = dict()
+        self.who_can_make_bid = players
+        self.bids = dict()
         self.auction_round = 1
 
     def make_lot_current(self):  # trivia
@@ -26,35 +26,35 @@ class Lot:
         '''
         Проверка коректности ставки
         '''
-        if not (player in self.who_can_bet):
+        if not (player in self.who_can_make_bid):
             return False, 'incorrect player'
         if (self.min_cost > price) or (price > self.max_cost):
             return False, 'incorrect price'
         return True, 'correct'
 
-    def add_bet(self, player, price):
+    def add_bid(self, player, price):
         '''
         Формирование ставки на lot
         '''
-        self.bets[player.user.id] = price
+        self.bids[player.user.id] = price
 
     def get_wins_buyers(self):
         '''
         Анализ победителей борьбы за лот и победной цены
         '''
-        if len(self.bets.values()) == 0:
+        if len(self.bids.values()) == 0:
             return [], None
         if self.auction_type == HOLLAND__AUCTION_TYPE:
-            price = min(self.bets.values())
+            price = min(self.bids.values())
             self.max_cost = price
         elif self.auction_type == ENGLAND__AUCTION_TYPE:
-            price = max(self.bets.values())
+            price = max(self.bids.values())
             self.min_cost = price
         else:
             assert False, "Неопознанный тип аукциона"
 
         # ids - cписок id player'ов, которые могут продолжать торговать
-        ids = dict(filter(lambda x: x[1] == price, self.bets.items())).keys()
+        ids = dict(filter(lambda x: x[1] == price, self.bids.items())).keys()
         buyers = list(map(users.getUserById, ids))
         return buyers, price
 
@@ -79,7 +79,7 @@ class Lot:
             'max_cost': self.max_cost,
             'max_start_cost': self.max_start_cost,
             'auction_type': self.auction_type,
-            'who_can_bid': list(map(lambda x: x.user.id, self.who_can_bet))
+            'who_can_bid': list(map(lambda x: x.user.id, self.who_can_make_bid))
         }
         if data['is_purchased']:
             data['who_bought_id'] = self.who_bought.id

@@ -55,9 +55,9 @@
                     от <span class="min_cost">{{cur_lot.min_cost}}</span> до
                     <span class="max_cost">{{cur_lot.max_cost}}</span>
                 </p>
-                <form id="bet_form" onsubmit="return false">
-                    <label for="bet_space">Ставка:</label>
-                    <input class="form__bet-space" type="number" step="{{price_step}}" name="bet_space">
+                <form id="bid_form" onsubmit="return false">
+                    <label for="bid_space">Ставка:</label>
+                    <input class="form__bid-space" type="number" step="{{price_step}}" name="bid_space">
                     <input class="form__submit" type="submit" value="Ввести">
                 </form>
                 <div class="current-lot__timer">{{left_time}}</div>
