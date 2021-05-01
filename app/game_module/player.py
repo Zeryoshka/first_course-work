@@ -1,4 +1,4 @@
 class Player():
-    def __init__(self, userSession):
+    def __init__(self, user, userSession):
         self.userSession = userSession
-        self.user = userSession.user
+        self.user = user
