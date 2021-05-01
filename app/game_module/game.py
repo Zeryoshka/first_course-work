@@ -1,7 +1,7 @@
 from .states_module.waiting_for_player import Waiting_for_player
 from .states_module.preparing_for_game import Preparing_for_game
 from .states_module.auction_module.auction import Auction
-
+from .players import Players
 from app.config_module.base_config import NONE_STATE, WAITING_FOR_PLAYER, PREPARING_FOR_GAME, \
     AUCTION, EMULATION, RESULTS, COUNT_DOWN_BEFORE_PREPARING
 from app.config_module.base_config import LOTS_FILE, WEATHERCAST_FILE
@@ -18,7 +18,7 @@ class Game():
         '''
         self._state = WAITING_FOR_PLAYER
         self._needPlayersCount = NEED_PLAYERS_COUNT
-        self.players = []
+        self.players = Players()
         self.waiting_for_player = Waiting_for_player(self)
         self.preparing_for_game = Preparing_for_game(self)
         self.auction = Auction(self)
@@ -56,26 +56,8 @@ class Game():
         '''
         Method for checking user with userSession with added to game
         '''
-        for player in self.players:
-            if player.userSession == userSession:
-                return True
-        return False
+        return self.players.is_user_in_players(userSession)
 
-    def get_player_by_user(self, user):
-        for player in self.players:
-            if player.user == user:
-                return player
-        raise ValueError
-
-    def players_list(self):
-        return self.players
-
-    @property
-    def players_count(self):
-        '''
-        Property for getting current players count
-        '''
-        return len(self.players)
 
     @property
     def needPlayersCount(self):

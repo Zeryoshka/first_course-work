@@ -1,5 +1,4 @@
 from app.game_module.counter_down import CounterDown
-from app.game_module.player import Player
 
 from app.config_module.base_config import WAITING_FOR_PLAYER
 from app.config_module.base_config import WAITING_FOR_PLAYER__COUNTER_DOWN, WAITING_FOR_PLAYER__WAIT
@@ -23,14 +22,14 @@ class Waiting_for_player:
         '''
         Method for add user to game
         '''
-        self.game.players.append(Player(userSession))
+        self.game.players.add_player(userSession.user, userSession)
 
     def needMorePlayer(self):
-        return (self.game.players_count < self.game.needPlayersCount)
+        return (self.game.players.players_count < self.game.needPlayersCount)
 
     def start_timer(self):
         self.delPlayersWithDiedSession()
-        if (self.game.players_count == self.game.needPlayersCount):
+        if (self.game.players.players_count == self.game.needPlayersCount):
             self.counterDown.start()
             self._sub_state = WAITING_FOR_PLAYER__COUNTER_DOWN
         return self.counterDown.started
@@ -41,7 +40,7 @@ class Waiting_for_player:
         when game.players_count > self.game.needPlayersCount
         '''
         if name not in ('game'):
-            assert(self.game.players_count <= self.game.needPlayersCount)
+            assert(self.game.players.players_count <= self.game.needPlayersCount)
         return object.__getattribute__(self, name)
 
     def delPlayersWithDiedSession(self):

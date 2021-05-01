@@ -76,12 +76,16 @@ class Auction:
             if len(buyers_list) == 0:
                 self.cur_lot.is_current = False
                 self.start_next_lot_at_auction()
+                return
             if len(buyers_list) == 1:
                 buyer = buyers_list[0]
                 self.cur_lot.make_lot_sold(buyer, price)
                 self.start_next_lot_at_auction()
-            else:
-                print('____________НЕСКОЛЬКО ИГРОКОВ____') #TODO Дописать обработку для этого случая
+                return
+            print('____________НЕСКОЛЬКО ИГРОКОВ____') #TODO Дописать обработку для этого случая
+            buyer = buyers_list[0]
+            self.cur_lot.make_lot_sold(buyer, price)
+            self.start_next_lot_at_auction()
 
     def start_next_lot_at_auction(self):
         '''
@@ -98,7 +102,7 @@ class Auction:
         '''
         Сделать ставку на текущий лот
         '''
-        player = self.game.get_player_by_user(user)
+        player = self.game.players.get_player_by_user(user)
         if lot_id != self.cur_lot.id:
             return (False, 'incorrect lot_id')
         is_valid, message = self.cur_lot.valid(player, price)

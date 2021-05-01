@@ -1,5 +1,4 @@
 from app.config_module.base_config import HOLLAND__AUCTION_TYPE, ENGLAND__AUCTION_TYPE
-from app import users
 class Lot:
     def __init__(self, players, lot_id, lot_name, lot_type, auction_type, min_cost, max_cost):
         assert lot_type in ['producer', 'consumer'], 'Parse error'
@@ -55,15 +54,15 @@ class Lot:
 
         # ids - cписок id player'ов, которые могут продолжать торговать
         ids = dict(filter(lambda x: x[1] == price, self.bids.items())).keys()
-        buyers = list(map(users.getUserById, ids))
+        buyers = list(map(self.who_can_make_bid.get_player_by_user_id, ids))
         return buyers, price
 
-    def make_lot_sold(self, user, price):
+    def make_lot_sold(self, player, price):
         '''
         Анализ победителя лота
         '''
         self.is_purchased = True
-        self.who_bought = user
+        self.who_bought = player
         self.purchase_cost = price
         self.is_current = False
 
@@ -82,7 +81,7 @@ class Lot:
             'who_can_bid': list(map(lambda x: x.user.id, self.who_can_make_bid))
         }
         if data['is_purchased']:
-            data['who_bought_id'] = self.who_bought.id
-            data['who_bought_name'] = self.who_bought.name
+            data['who_bought_id'] = self.who_bought.user.id
+            data['who_bought_name'] = self.who_bought.user.name
             data['purchase_cost'] = self.purchase_cost
         return data

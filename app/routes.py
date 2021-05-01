@@ -107,7 +107,7 @@ def game_user_waiting_req(userSession):
     if game.waiting_for_player.close_state():
         return redirect(url_for('game_req'))
     param = {
-        'current_players_count': game.players_count,
+        'current_players_count': game.players.players_count,
         'need_players_count': game.needPlayersCount,
         'user_name': userSession.user.name,
         'timer_is_active': game.waiting_for_player.state(WAITING_FOR_PLAYER__COUNTER_DOWN)
@@ -240,7 +240,7 @@ def api_check_for_waiting_req():
         else:
             ans = {
                 'access': True,
-                'current_players_count': game.players_count,
+                'current_players_count': game.players.players_count,
                 'need_players_count': game.needPlayersCount,
                 'timer_is_active': game.waiting_for_player.state(WAITING_FOR_PLAYER__COUNTER_DOWN),
                 'state_closed': game.waiting_for_player.close_state()
