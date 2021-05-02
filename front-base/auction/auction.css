@@ -42,7 +42,7 @@ body {
 .content__lots {
     display: flex;
     flex-direction: column;
-    width: 60%;
+    width: 70%;
     flex-wrap: wrap;
     height: 90vh;
 }
@@ -59,22 +59,47 @@ body {
 
 
 .lot {
+    color: white;
     display: flex;
+    flex-direction: column;
     width: 16%;
     background-color: rgba(50, 50, 50, 0.5);
     height: 100%;
     margin-left: 5%;
     border-radius: 5%;
+    box-sizing: border-box;
+    overflow: hidden;
+    justify-content: space-evenly;
+    align-items: center;
 }
 
 .lot_first-lot {
     margin-left: 0;
 }
 
+.lot__name {
+    display: flex;
+    font-size: 1.3rem;
+    font-weight: 600;
+    padding-bottom: 0.2rem;
+    box-sizing: border-box;
+}
+
+.lot__icon {
+    display: flex;
+    height: 45%;
+}
+
+.lot__icon-in {
+    display: flex;
+    max-width: 100%;
+    max-height: 100%;
+}
+
 
 .content__cur-lot {
     display: flex;
-    width: 40%;
+    width: 30%;
     background-color: black;
 }
 
