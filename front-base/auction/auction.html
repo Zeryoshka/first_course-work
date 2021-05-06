@@ -19,8 +19,31 @@
     </div>
     <div class="content">
         
-        <div class="content__cur-lot">
+        <div class="content__cur-lot cur-lot">
+            <div class="cur-lot__in">
+                <div class="cur-lot__line">
+                    <p class="cur-lot__name">Дом</p>
+                    <img class="cur-lot__auction-type-img" src="img/up-auction.png" alt="">
+                </div>
+                <p class="cur-lot__round">Раунд <span class="round_num">1</span></p>
 
+                <p class="cur-lot__price-line">
+                    От <span class="cur-lot__min-price">1</span> 
+                    до <span class="cur-lot__max-price">10</span>
+                </p>
+
+                <div class="cur-lot__bid-form">
+                    <div class="bid-form__line">
+                        <label class="bid-form__bid-lable" for="bid_space">Ставка:</label>
+                        <input class="bid-form__bid-space" type="number" min="5" max="10" step="{{price_step}}" name="bid_space">
+                    </div>
+                    <div class="bid-form__line">
+                        <input class="bid-form__but" id="make_bid_but" type="button" value="Сделать ставку">
+                        <input class="bid-form__but" id="pass_but" type="button" value="Пас">
+                        <input class="bid-form__but" id="change_bid_but" type="button" value="Изменить ставку">
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="content__lots lots">
             <div class="lots__container">

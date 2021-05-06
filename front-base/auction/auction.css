@@ -37,6 +37,7 @@ body {
     display: flex;
     flex-direction: row;
     width: 100%;
+    align-items: center;
 }
 
 .content__lots {
@@ -106,14 +107,104 @@ body {
     display: flex;
     width: 100%;
     height: 1px;
-    background-color: red;
 }
 
 .content__cur-lot {
     display: flex;
+    margin-left: 1em;
     width: 30%;
-    height: 90vh;
-    background-color: black;
+    height: 95%;
+    box-sizing: border-box;
+}
+
+.cur-lot {
+    display: flex;
+    background-color: rgba(50, 50, 50, 0.5);
+    border-radius: 3%;
+    padding: 1em;
+}
+
+.cur-lot__in {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: auto;
+    color: white;
+    box-sizing: border-box;
+    width: 90%;
+}
+
+.cur-lot__line {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 95%;
+}
+
+.cur-lot__name {
+    display: flex;
+    font-size: 2rem;
+    margin-right: 1rem;
+}
+
+.cur-lot__auction-type-img {
+    height: 2em;
+}
+
+.cur-lot__round {
+    margin-top: 1.3rem;
+}
+
+.cur-lot__price-line {
+    font-size: 1.3rem;
+}
+
+.cur-lot__min-price, .cur-lot__max-price {
+    font-weight: 600;
+}
+
+
+.cur-lot__bid-form {
+    display: flex;
+    margin-top: 1.6rem;
+    flex-direction: column;
+    font-size: 1.1rem;
+}
+
+.bid-form__line {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.bid-form__bid-lable {
+    display: flex;
+    margin-right: 1em;
+}
+.bid-form__bid-space {
+    font-size: 0.9rem;
+    display: flex;
+    width: 10em;
+    border: none;
+    border-radius: 1em;
+    padding-top: 0.2em;
+    padding-bottom: 0.1em;
+    text-align: center;
+}
+
+.bid-form__but {
+    font-size: 1rem;
+    margin: 0.7rem 0.5rem;
+    padding: 0.2rem 0.6em;
+    border-radius: 1em;
+    border: none;
+}
+
+#change_bid_but {
+    display: none;
 }
 
 .status-block {
