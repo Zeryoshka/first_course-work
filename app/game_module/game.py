@@ -3,7 +3,7 @@ from .states_module.preparing_for_game import Preparing_for_game
 from .states_module.auction_module.auction import Auction
 from .players import Players
 from app.config_module.base_config import NONE_STATE, WAITING_FOR_PLAYER, PREPARING_FOR_GAME, \
-    AUCTION, EMULATION, RESULTS, COUNT_DOWN_BEFORE_PREPARING
+    AUCTION, EMULATION, RESULTS
 from app.config_module.base_config import LOTS_FILE, WEATHERCAST_FILE
 from app.config_module.base_config import NEED_PLAYERS_COUNT
 
