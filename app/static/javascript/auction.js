@@ -58,10 +58,16 @@ function create_lot(lot_type, name, who_bought, price) {
 }
 
 function create_cur_lot(cur_lot) {
-    $('.cur_lot_id').text(cur_lot.lot_id);
-    $('.current-lot__name').text(cur_lot.lot_name);
-    $('.min_cost').text(cur_lot.min_cost);
-    $('.max_cost').text(cur_lot.max_cost);
+    $('.cur-lot__name').text(cur_lot.lot_name);
+    $('.cur-lot__min-price').text(cur_lot.min_cost);
+    $('.cur-lot__max-price').text(cur_lot.max_cost);
+    $('.cur-lot__auction-type-img').removeClass(
+        "cur-lot__auction-type-img__type_dutch cur-lot__auction-type-img__type_english"
+    );
+    if (cur_lot.auction_type == 'dutch')
+        $('.cur-lot__auction-type-img').addClass("cur-lot__auction-type-img__type_dutch")
+    else
+        $('.cur-lot__auction-type-img').addClass("cur-lot__auction-type-img__type_english")
 }
 
 function update_page(cur_lot, lots) {
