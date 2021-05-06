@@ -222,6 +222,22 @@ body {
     padding: 0.25rem 0.5rem;
 }
 
+.cur-lot__timer {
+    display: flex;
+    font-size: 1.5em;
+    margin-top: 3rem;
+    padding: 0.1em;
+    width: 2.5em;
+    text-align: center;
+    border: white solid 2px;
+    border-radius: 0.5em;
+}
+
+.cur-lot__timer p {
+    display: flex;
+    margin: auto;
+}
+
 .main-container__links {
     display: flex;
     justify-content: space-between;

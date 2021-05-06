@@ -21,14 +21,20 @@
         <div class="content__cur-lot cur-lot">
             <div class="cur-lot__in">
                 <div class="cur-lot__line">
-                    <p class="cur-lot__name">Дом</p>
-                    <img class="cur-lot__auction-type-img" src="{{url_for('static', filename='auction-page/img/up-auction.png')}}">
+                    <p class="cur-lot__name">{{cur_lot.name}}</p>
+                    <img class="cur-lot__auction-type-img
+                        {% if cur_lot.auction_type == 'dutch' %}
+                            cur-lot__auction-type-img__type_dutch
+                        {% else %}
+                            cur-lot__auction-type-img__type_english
+                        {% endif %}
+                    " src="{{url_for('static', filename='auction-page/img/up-auction.png')}}">
                 </div>
                 <p class="cur-lot__round">Раунд <span class="round_num">1</span></p>
 
                 <p class="cur-lot__price-line">
-                    От <span class="cur-lot__min-price">1</span> 
-                    до <span class="cur-lot__max-price">10</span>
+                    От <span class="cur-lot__min-price">{{cur_lot.min_cost}}</span> 
+                    до <span class="cur-lot__max-price">{{cur_lot.max_cost}}</span>
                 </p>
 
                 <div class="cur-lot__bid-form">
@@ -41,6 +47,12 @@
                         <input class="bid-form__but" id="pass_but" type="button" value="Пас">
                         <input class="bid-form__but" id="change_bid_but" type="button" value="Изменить ставку">
                     </div>
+                </div>
+                
+                <div class="cur-lot__timer">
+                    <p>
+                        {{left_time}}
+                    </p>
                 </div>
             </div>
         </div>
