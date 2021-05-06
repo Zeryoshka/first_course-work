@@ -7,14 +7,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{url_for('static', filename='auction-page/auction-page_style.css')}}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <!-- <script src="{{url_for('static', filename='javascript/preparing_for_game.js')}}"> -->
-        <!-- renderPage({{left_time}}); -->
-    <!-- </script> -->
+    <script src="{{url_for('static', filename='javascript/jquery.cookie.js')}}"></script>
     <title>Power Market</title>
 </head>
 <body>
     <div class="header">
-        <h1 class="header__text">Аукцион (Zergey)</h1>
+        <h1 class="header__text">Аукцион ({{user.name}})</h1>
     </div>
     <div class="content">
         
@@ -37,7 +35,7 @@
                     до <span class="cur-lot__max-price">{{cur_lot.max_cost}}</span>
                 </p>
 
-                <div class="cur-lot__bid-form">
+                <form class="cur-lot__bid-form" id="bid__form">
                     <div class="bid-form__line">
                         <label class="bid-form__bid-lable" for="bid_space">Ставка:</label>
                         <input class="bid-form__bid-space" type="number" min="5" max="10" step="{{price_step}}" name="bid_space">
@@ -47,10 +45,10 @@
                         <input class="bid-form__but" id="pass_but" type="button" value="Пас">
                         <input class="bid-form__but" id="change_bid_but" type="button" value="Изменить ставку">
                     </div>
-                </div>
+                </form>
                 
                 <div class="cur-lot__timer">
-                    <p>
+                    <p id="left_time">
                         {{left_time}}
                     </p>
                 </div>
@@ -63,8 +61,8 @@
                         {% if lot.is_current %}
                             lot_lot-type_cur-lot
                         {% elif lot.who_bought is none %}
-
-                        {% elif lot.who_bought.name == user.name %}
+                        
+                        {% elif lot.who_bought.user.name == user.name %}
                             lot_lot-type_your-lot
                         {% elif lot.who_bought.name != user.name %}
                             lot_lot-type_not-your-lot
@@ -84,7 +82,7 @@
                             {% if lot.is_current == True or lot.who_bought is none %}
                             -
                             {% else %}
-                                {{lot.who_bought.name}}
+                                {{lot.who_bought.user.name}}
                             {% endif %}
                         </p>
                         <p class="lot__price">
@@ -100,5 +98,6 @@
             </div>
         </div>
     </div>
+    <script src="{{url_for('static', filename='javascript/auction.js')}}"></script>
 </body>
 </html>

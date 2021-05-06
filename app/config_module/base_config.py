@@ -7,7 +7,7 @@ NEED_PLAYERS_COUNT = 1# Количество игроков
 # Константы времени (в секундах)
 COUNT_DOWN_BEFORE_PREPARING__TIME = timedelta(seconds=0)
 PREPARING_FOR_GAME__TIME = timedelta(seconds=0)
-BID__TIME = timedelta(seconds=15)
+BID__TIME = timedelta(seconds=7)
 USERSESSION_LIFETIME = 5000  # Время жизни UserSession
 
 # Состояния объекта Game (их коды)

@@ -1,7 +1,7 @@
 function send_bid(event) {
-    var min_cost = Number($('.min_cost').text());
-    var max_cost = Number($('.max_cost').text());
-    var cur_bid = Number($('#bid_form').serializeArray()[0]['value']);
+    var min_cost = Number($('.cur-lot__min-price').text());
+    var max_cost = Number($('.cur-lot__max-price').text());
+    var cur_bid = Number($('#bid__form').serializeArray()[0]['value']);
     if (cur_bid < min_cost || cur_bid > max_cost){
         write_message('Ставка не удовлетворяет текущему условию');
         return false;
@@ -22,30 +22,39 @@ function send_bid(event) {
 }
 
 function write_message(message) {
-    $('.message-block').text(message)
+    // $('.message-block').text(message)
+    // alert(message)
 }
 
-function create_lot(id, name, who_bought, price) {
-    var lot_id = $('<div></div>', {
-        class: 'lot__number',
-        text: id
-    });
-    var lot_name = $('<div></div>', {
+function create_lot(lot_type, name, who_bought, price) {
+    var lot_name = $('<p></p>', {
         class: 'lot__name',
         text: name
     });
-    var lot_team = $('<div></div>', {
+
+    var img = $('<img>', {
+        class: 'lot__icon-in',
+        src: lot_type == 'consumer'? '/static/auction-page/img/home_icon.png': 
+         '/static/auction-page/img/ses_icon.png'
+    });
+    var lot_icon = (
+        $('<div></div>', {
+        class: 'lot__icon',
+        }).append(img)
+    );
+
+    var lot_team = $('<p></p>', {
         class: 'lot__team',
         text: who_bought
     });
-    console.log(price);
-    var lot_price = $('<div></div>', {
+
+    var lot_price = $('<p></p>', {
         class: 'lot__price',
         text: price
     });
     return $('<div></div>', {
         class: 'lot',
-    }).append(lot_id, lot_name, lot_team, lot_price);
+    }).append(lot_name, lot_icon, lot_team, lot_price);
 }
 
 function create_cur_lot(cur_lot) {
@@ -56,22 +65,22 @@ function create_cur_lot(cur_lot) {
 }
 
 function update_page(cur_lot, lots) {
-    $('.lots').empty();
+    $('.lots__container').empty();
     for (var i = 0; i < lots.length; ++i) {
         var price = lots[i].is_purchased? lots[i].purchase_cost : '0';
         console.log(lots[i].is_purchased);
         var who_bought = lots[i].is_purchased? lots[i].who_bought_name : '-';
-        var lot = create_lot(lots[i].lot_id, lots[i].lot_name, who_bought, price);
+        var lot = create_lot(lots[i].lot_type, lots[i].lot_name, who_bought, price);
         console.log(who_bought);
         if (lots[i].is_current)
-            lot.addClass('lot_type_current');
+            lot.addClass('lot_lot-type_cur-lot');
         else if (!lots[i].is_purchased)
-            lot.addClass('lot_owner_nobody');
+            ;
         else if (lots[i].who_bought_id == $.cookie('user_id'))
-            lot.addClass('lot_owner_your');
+            lot.addClass('lot_lot-type_your-lot');
         else
-            lot.addClass('lot_owner_not-you');
-        $('.lots').append(lot);
+            lot.addClass('lot_lot-type_not-your-lot');
+        $('.lots__container').append(lot);
     }
 
     create_cur_lot(cur_lot);
@@ -99,7 +108,7 @@ function get_updates() {
 }
 
 function tik_tak(left_time) {
-    $('.current-lot__timer').text(left_time);
+    $('#left_time').text(left_time);
     if (left_time > 0) {
         setTimeout(tik_tak, 1000, left_time - 1);
         return;
@@ -107,6 +116,6 @@ function tik_tak(left_time) {
     get_updates();
 }
 
-$('.form__submit').click(send_bid);
+$('#make_bid_but').click(send_bid);
 console.log($.cookie('cur_lot_id'));
 tik_tak(Number($.cookie('left_time')));
