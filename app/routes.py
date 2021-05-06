@@ -159,8 +159,11 @@ def game_auction_req(userSession):
         'user': userSession.user,
         'lots': game.auction.actual_lots,
         'cur_lot': game.auction.cur_lot,
-        'left_time': game.auction.bid_counter_down.left_time.seconds
+        'left_time': game.auction.bid_counter_down.left_time.seconds,
+        'have_bid': game.auction.cur_lot.user_have_bid(userSession.user)
     }
+    if param['have_bid']:
+        param['my_bid'] = game.auction.cur_lot.get_user_bid(userSession.user)
 
     resp = make_response(render_template('auction_template.html', **param))
     resp.set_cookie('left_time', str(game.auction.bid_counter_down.left_time.seconds), 100)
@@ -195,7 +198,7 @@ def api_make_bid_req(userSession):
     '''
     game.auction.start()
     req = dict(request.form)
-    is_successful, message = game.auction.make_bid(userSession.user, int(req['lot_id']), int(req['price']))
+    is_successful, message = game.auction.make_bid(userSession.user, int(req['lot_id']), float(req['price']))
     resp = {
         'is_successful': is_successful,
         'message': message
