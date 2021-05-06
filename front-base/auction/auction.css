@@ -232,3 +232,25 @@ body {
     color: white;
 }
 
+/* Модификаторы для основных блоков */
+
+.cur-lot__auction-type-img__type_dutch{
+    transform: rotate(180deg);
+}
+
+.cur-lot__auction-type-img__type_english {
+    transform: rotate(0deg);
+}
+
+.lot_lot-type_cur-lot {
+    background-color: rgba(250, 246, 0, 0.5);
+    color: black;
+}
+
+.lot_lot-type_your-lot {
+    background-color: rgba(62, 177, 27, 0.5);
+}
+
+.lot_lot-type_not-your-lot {
+    background-color: rgba(255, 0, 0, 0.5);
+}
