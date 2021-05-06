@@ -1,5 +1,6 @@
 lot_id,lot_name,lot_type,auction_type,min_cost,max_cost
-1,Кракозябра,consumer,english,1,40
-2,"Веселая, но тупая хрень",producer,dutch,12,3748
-3,ghjfkd,producer,dutch,21,432
-4,Some shit,consumer,english,6,23
+1,Дом,consumer,dutch,1,10
+2,Завод,consumer,dutch,1,10
+3,СЭС,producer,english,1,100
+4,ВЭС,producer,english,1,100
+5,Дом,consumer,dutch,1,10
