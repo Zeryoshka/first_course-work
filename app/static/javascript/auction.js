@@ -1,4 +1,8 @@
 function send_bid(event) {
+    $('.bid-form__bid-space').attr('readonly', '');
+    $('#make_bid_but').css('display', 'none');
+    $('#pass_but').css('display', 'none');
+    $('#change_bid_but').css('display', 'flex');
     var min_cost = Number($('.cur-lot__min-price').text());
     var max_cost = Number($('.cur-lot__max-price').text());
     var cur_bid = Number($('#bid__form').serializeArray()[0]['value']);
@@ -19,6 +23,23 @@ function send_bid(event) {
         console.log(response.message);
     })
     return false;
+}
+
+function valid_bid(event) {
+    field = $('.bid-form__bid-space');
+    if (isNaN(field.val())) {
+        field.val(field.attr('min'));
+        return;
+    }
+    var num = parseFloat(field.val());
+    if (num < parseFloat(field.attr('min'))) {
+        field.val(field.attr('min'));
+        return;
+    }
+    if (num > parseFloat(field.attr('max'))) {
+        field.val(field.attr('max'));
+        return;
+    }
 }
 
 function write_message(message) {
@@ -70,6 +91,14 @@ function create_cur_lot(cur_lot) {
         $('.cur-lot__auction-type-img').addClass("cur-lot__auction-type-img__type_english")
 }
 
+function change_bid(event) {
+    $('.bid-form__bid-space').removeAttr('readonly');
+    $('#make_bid_but').css('display', 'flex');
+    $('#pass_but').css('display', 'flex');
+    $('#change_bid_but').css('display', 'none');
+    $('.bid-form__bid-space').val('-');
+}
+
 function update_page(cur_lot, lots) {
     $('.lots__container').empty();
     for (var i = 0; i < lots.length; ++i) {
@@ -92,6 +121,13 @@ function update_page(cur_lot, lots) {
     create_cur_lot(cur_lot);
 }
 
+function pass_bid(event) {
+    $('.bid-form__bid-space').attr('readonly', '');
+    $('#make_bid_but').css('display', 'none');
+    $('#pass_but').css('display', 'none');
+    $('#change_bid_but').css('display', 'flex');
+}
+
 function get_updates() {
     $.get('api/update_lots').done(function(response){
         if (!response.is_auction){
@@ -105,6 +141,12 @@ function get_updates() {
         $.cookie('cur_lot_id', response.cur_lot.lot_id, {
             path: '/game/auction'
         });
+
+        $('.bid-form__bid-space').removeAttr('readonly');
+        $('#make_bid_but').css('display', 'flex');
+        $('#pass_but').css('display', 'flex');
+        $('#change_bid_but').css('display', 'none');
+
         tik_tak(response.left_time);
         update_page(response.cur_lot, response.lots);
     }).fail(function(response){
@@ -123,5 +165,8 @@ function tik_tak(left_time) {
 }
 
 $('#make_bid_but').click(send_bid);
+$('#change_bid_but').click(change_bid);
+$('#pass_but').click(pass_bid);
+$('.bid-form__bid-space').change(valid_bid);
 console.log($.cookie('cur_lot_id'));
 tik_tak(Number($.cookie('left_time')));
