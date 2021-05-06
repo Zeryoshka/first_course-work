@@ -6,7 +6,7 @@ NEED_PLAYERS_COUNT = 1# Количество игроков
 
 # Константы времени (в секундах)
 COUNT_DOWN_BEFORE_PREPARING__TIME = timedelta(seconds=0)
-PREPARING_FOR_GAME__TIME = timedelta(seconds=0)
+PREPARING_FOR_GAME__TIME = timedelta(seconds=500)
 BID__TIME = timedelta(seconds=7)
 USERSESSION_LIFETIME = 5000  # Время жизни UserSession
 
@@ -30,8 +30,8 @@ TEMPLATE_FOLDER = 'templates'
 
 
 # Файлы
-LOTS_FILE = 'game_param/lots.csv'
-WEATHERCAST_FILE = 'game_param/weather.csv'
+LOTS_FILE = 'game-param/lots.csv'
+WEATHERCAST_FILE = 'game-param/weather.csv'
 
 
 # Наименования типов аукционов
