@@ -30,6 +30,21 @@ class Lot:
         if (self.min_cost > price) or (price > self.max_cost):
             return False, 'incorrect price'
         return True, 'correct'
+    
+    def user_have_bid(self, user):
+        '''
+        Проверка наличия ставки этим пользоватлем
+        '''
+        for id_ in self.bids:
+            if user.id == id_:
+                return True
+        return False
+
+    def get_user_bid(self, user):
+        '''
+        Получение ставки от конкретного пользователя
+        '''
+        return self.bids[user.id]
 
     def add_bid(self, player, price):
         '''
