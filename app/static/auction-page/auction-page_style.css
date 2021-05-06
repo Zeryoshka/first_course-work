@@ -1,0 +1,256 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 18px;
+}
+
+body {
+    width: 100%;
+    height: 100vh;
+    background-image: url('img/background.jpeg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    flex-direction: column;
+}
+
+.header {
+    background-color: rgba(50, 50, 50, 0.5);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 10vh;
+    color: white;
+}
+
+.header__text{
+    margin: auto;
+    font-size: 2rem;
+}
+
+.content {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    align-items: center;
+}
+
+.content__lots {
+    display: flex;
+    flex-direction: row;
+    width: 70%;
+    padding: 0;
+    box-sizing: border-box;
+    align-items: flex-start;
+    height: 90vh;
+    overflow-y: scroll;
+    /* justify-content: center; */
+}
+
+.lots__container {
+    display: flex;
+    width: 100%;
+    padding: 1.5% 0% 0% 2%;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-self: stretch;
+
+}
+
+
+.lot {
+    color: white;
+    display: flex;
+    flex-direction: column;
+    width: 18%;
+    min-width: 120px;
+    background-color: rgba(50, 50, 50, 0.5);
+    height: 25vh;
+    margin-right: 2%;
+    margin-bottom: 2%;
+    border-radius: 5%;
+    box-sizing: border-box;
+    overflow: hidden;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.lot_first-lot {
+    margin-left: 0;
+}
+
+.lot__name {
+    display: flex;
+    font-size: 1.3rem;
+    font-weight: 600;
+    padding-bottom: 0.2rem;
+    box-sizing: border-box;
+}
+
+.lot__icon {
+    display: flex;
+    height: 32%;
+}
+
+.lot__icon-in {
+    display: flex;
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.meta-lot {
+    display: flex;
+    width: 100%;
+    height: 1px;
+}
+
+.content__cur-lot {
+    display: flex;
+    margin-left: 1em;
+    width: 30%;
+    height: 95%;
+    box-sizing: border-box;
+}
+
+.cur-lot {
+    display: flex;
+    background-color: rgba(50, 50, 50, 0.5);
+    border-radius: 3%;
+    padding: 1em;
+}
+
+.cur-lot__in {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: auto;
+    color: white;
+    box-sizing: border-box;
+    width: 90%;
+}
+
+.cur-lot__line {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 95%;
+}
+
+.cur-lot__name {
+    display: flex;
+    font-size: 2rem;
+    margin-right: 1rem;
+}
+
+.cur-lot__auction-type-img {
+    height: 2em;
+}
+
+.cur-lot__round {
+    margin-top: 1.3rem;
+}
+
+.cur-lot__price-line {
+    font-size: 1.3rem;
+}
+
+.cur-lot__min-price, .cur-lot__max-price {
+    font-weight: 600;
+}
+
+
+.cur-lot__bid-form {
+    display: flex;
+    margin-top: 1.6rem;
+    flex-direction: column;
+    font-size: 1.1rem;
+}
+
+.bid-form__line {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.bid-form__bid-lable {
+    display: flex;
+    margin-right: 1em;
+}
+.bid-form__bid-space {
+    font-size: 0.9rem;
+    display: flex;
+    width: 10em;
+    border: none;
+    border-radius: 1em;
+    padding-top: 0.2em;
+    padding-bottom: 0.1em;
+    text-align: center;
+}
+
+.bid-form__but {
+    font-size: 1rem;
+    margin: 0.7rem 0.5rem;
+    padding: 0.2rem 0.6em;
+    border-radius: 1em;
+    border: none;
+}
+
+#change_bid_but {
+    display: none;
+}
+
+.status-block {
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+}
+
+.status-block__count-down {
+    margin: 1rem 0 1.5rem;
+    font-size: 2rem;
+    border: white solid 1px;
+    border-radius: 10%;
+    padding: 0.25rem 0.5rem;
+}
+
+.main-container__links {
+    display: flex;
+    justify-content: space-between;
+    width: 50%;
+    font-size: 1.4rem;
+}
+
+.main-container__link {
+    color: white;
+}
+
+/* Модификаторы для основных блоков */
+
+.cur-lot__auction-type-img__type_dutch{
+    transform: rotate(180deg);
+}
+
+.cur-lot__auction-type-img__type_english {
+    transform: rotate(0deg);
+}
+
+.lot_lot-type_cur-lot {
+    background-color: rgba(250, 246, 0, 0.5);
+    color: black;
+}
+
+.lot_lot-type_your-lot {
+    background-color: rgba(62, 177, 27, 0.5);
+}
+
+.lot_lot-type_not-your-lot {
+    background-color: rgba(255, 0, 0, 0.5);
+}
