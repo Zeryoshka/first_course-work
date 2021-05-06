@@ -5,7 +5,7 @@
 
 html {
     font-family: 'Open Sans', sans-serif;
-    font-size: 18px;
+    font-size: 20px;
 }
 
 body {
@@ -86,6 +86,7 @@ body {
 
 .lot__name {
     display: flex;
+    text-align: center;
     font-size: 1.3rem;
     font-weight: 600;
     padding-bottom: 0.2rem;

@@ -5,8 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="auction.css">
-
+    <link rel="stylesheet" href="{{url_for('static', filename='auction-page/auction-page_style.css')}}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <!-- <script src="{{url_for('static', filename='javascript/preparing_for_game.js')}}"> -->
         <!-- renderPage({{left_time}}); -->
@@ -23,7 +22,7 @@
             <div class="cur-lot__in">
                 <div class="cur-lot__line">
                     <p class="cur-lot__name">Дом</p>
-                    <img class="cur-lot__auction-type-img" src="img/up-auction.png" alt="">
+                    <img class="cur-lot__auction-type-img" src="{{url_for('static', filename='auction-page/img/up-auction.png')}}">
                 </div>
                 <p class="cur-lot__round">Раунд <span class="round_num">1</span></p>
 
@@ -47,138 +46,45 @@
         </div>
         <div class="content__lots lots">
             <div class="lots__container">
-                <div class="lot lot_first-lot">
-                    <p class="lot__name">Дом</p>
-                    <div class="lot__icon">
-                        <img class="lot__icon-in" src="img/home_icon.png">                        
-                    </div>
-                    <p class="lot__team">-</p>
-                    <p class="lot__price">0</p>
-                </div>
-                <div class="lot lot_lot-type_cur-lot">
-                    <p class="lot__name">СЭС</p>
-                    <div class="lot__icon">
-                        <img class="lot__icon-in" src="img/ses_icon.png">
-                    </div>
-                    <p class="lot__team">-</p>
-                    <p class="lot__price">0</p>
-                </div>
-                <div class="lot lot_lot-type_your-lot">
-                    <p class="lot__name">Дом</p>
-                    <div class="lot__icon">
-                        <img class="lot__icon-in" src="img/home_icon.png">                        
-                    </div>
-                    <p class="lot__team">-</p>
-                    <p class="lot__price">0</p>
-                </div>
-                <div class="lot lot_lot-type_not-your-lot">
-                    <p class="lot__name">СЭС</p>
-                    <div class="lot__icon">
-                        <img class="lot__icon-in" src="img/ses_icon.png">
-                    </div>
-                    <p class="lot__team">-</p>
-                    <p class="lot__price">0</p>
-                </div>
-                <div class="lot">
-                    <p class="lot__name">Дом</p>
-                    <div class="lot__icon">
-                        <img class="lot__icon-in" src="img/home_icon.png">                        
-                    </div>
-                    <p class="lot__team">-</p>
-                    <p class="lot__price">0</p>
-                </div>
-                <div class="lot">
-                    <p class="lot__name">СЭС</p>
-                    <div class="lot__icon">
-                        <img class="lot__icon-in" src="img/ses_icon.png">
-                    </div>
-                    <p class="lot__team">-</p>
-                    <p class="lot__price">0</p>
-                </div>
-                <div class="lot">
-                    <p class="lot__name">Дом</p>
-                    <div class="lot__icon">
-                        <img class="lot__icon-in" src="img/home_icon.png">                        
-                    </div>
-                    <p class="lot__team">-</p>
-                    <p class="lot__price">0</p>
-                </div>
-                <div class="lot">
-                    <p class="lot__name">Дом</p>
-                    <div class="lot__icon">
-                        <img class="lot__icon-in" src="img/home_icon.png">                        
-                    </div>
-                    <p class="lot__team">-</p>
-                    <p class="lot__price">0</p>
-                </div>
-                <div class="lot">
-                    <p class="lot__name">Дом</p>
-                    <div class="lot__icon">
-                        <img class="lot__icon-in" src="img/home_icon.png">                        
-                    </div>
-                    <p class="lot__team">-</p>
-                    <p class="lot__price">0</p>
-                </div>
-                <div class="lot">
-                    <p class="lot__name">Дом</p>
-                    <div class="lot__icon">
-                        <img class="lot__icon-in" src="img/home_icon.png">                        
-                    </div>
-                    <p class="lot__team">-</p>
-                    <p class="lot__price">0</p>
-                </div>
-                <div class="lot">
-                    <p class="lot__name">Дом</p>
-                    <div class="lot__icon">
-                        <img class="lot__icon-in" src="img/home_icon.png">                        
-                    </div>
-                    <p class="lot__team">-</p>
-                    <p class="lot__price">0</p>
-                </div>
-                <div class="lot">
-                    <p class="lot__name">Дом</p>
-                    <div class="lot__icon">
-                        <img class="lot__icon-in" src="img/home_icon.png">                        
-                    </div>
-                    <p class="lot__team">-</p>
-                    <p class="lot__price">0</p>
-                </div>
-                <div class="lot">
-                    <p class="lot__name">Дом</p>
-                    <div class="lot__icon">
-                        <img class="lot__icon-in" src="img/home_icon.png">                        
-                    </div>
-                    <p class="lot__team">-</p>
-                    <p class="lot__price">0</p>
-                </div>
-                <div class="lot">
-                    <p class="lot__name">Дом</p>
-                    <div class="lot__icon">
-                        <img class="lot__icon-in" src="img/home_icon.png">                        
-                    </div>
-                    <p class="lot__team">-</p>
-                    <p class="lot__price">0</p>
-                </div>
-                <div class="lot">
-                    <p class="lot__name">Дом</p>
-                    <div class="lot__icon">
-                        <img class="lot__icon-in" src="img/home_icon.png">                        
-                    </div>
-                    <p class="lot__team">-</p>
-                    <p class="lot__price">0</p>
-                </div>
-                <div class="lot">
-                    <p class="lot__name">Дом</p>
-                    <div class="lot__icon">
-                        <img class="lot__icon-in" src="img/home_icon.png">                        
-                    </div>
-                    <p class="lot__team">-</p>
-                    <p class="lot__price">0</p>
-                </div>
+                {% for lot in lots %}
+                    <div class="lot
+                        {% if lot.is_current %}
+                            lot_lot-type_cur-lot
+                        {% elif lot.who_bought is none %}
 
-                <div class="meta-lot">
-
-                </div>
+                        {% elif lot.who_bought.name == user.name %}
+                            lot_lot-type_your-lot
+                        {% elif lot.who_bought.name != user.name %}
+                            lot_lot-type_not-your-lot
+                        {% endif %}
+                    ">
+                        <p class="lot__name">{{lot.name}}</p>
+                        <div class="lot__icon">
+                            <img class="lot__icon-in" src="
+                                {% if lot.lot_type == 'consumer' %}
+                                    {{url_for('static', filename='auction-page/img/home_icon.png')}}
+                                {% else %}
+                                    {{url_for('static', filename='auction-page/img/ses_icon.png')}}
+                                {% endif %}
+                            ">
+                        </div>
+                        <p class="lot__team">
+                            {% if lot.is_current == True or lot.who_bought is none %}
+                            -
+                            {% else %}
+                                {{lot.who_bought.name}}
+                            {% endif %}
+                        </p>
+                        <p class="lot__price">
+                            {% if lot.is_current == True or lot.who_bought is none %}
+                                0
+                            {% else %}
+                                {{lot.purchase_cost}}
+                            {% endif %}
+                        </p>
+                    </div>
+                {% endfor %}
+                <div class="meta-lot"></div>
             </div>
         </div>
     </div>
