@@ -13,4 +13,4 @@ class Contract:
         self.name = lot.name
         self.contract_type = lot.type
         self.cost = lot.purchase_cost
-        self.who_bought = lot.who_bought
+        self.player = lot.who_bought
