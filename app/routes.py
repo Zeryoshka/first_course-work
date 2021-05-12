@@ -13,7 +13,7 @@ from app import app
 from app import userSessions, users
 from app import game
 
-from app.config_module.base_config import WAITING_FOR_PLAYER, PREPARING_FOR_GAME, AUCTION
+from app.config_module.base_config import WAITING_FOR_PLAYER, PREPARING_FOR_GAME, AUCTION, EMULATION
 from app.config_module.base_config import WAITING_FOR_PLAYER__COUNTER_DOWN, WAITING_FOR_PLAYER__WAIT
 
 
