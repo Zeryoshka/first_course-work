@@ -1,4 +1,6 @@
-from app.game_module.counter_down import CounterDown
+# from app.game_module.counter_down import CounterDown
+from .contract_utils import create_contracts
+from .contract_utils import sort_contarcts_for_players
 
 from app.config_module.base_config import EMULATION
 from app.config_module.base_config import EMULATION_STEPS_COUNT
@@ -15,18 +17,30 @@ class Emulation:
         self.game = game
         self.cur_step = 0
         self.is_started = False
+        self.contracts = dict()
+        self.results_by_step = dict()
         # self.counterDown = CounterDown()
 
     def start(self):
         '''
         Method for start current state,
-        actually it need for activate counterDown inside this object
         '''
-        if not self.is_started and \
+        if self.is_started and \
          self.game.state(EMULATION):
-            self.is_started = True
-            self.cur_step = 0
-            # self.counterDown.start()
+            return
+            
+        self.is_started = True
+        self.cur_step = 0
+        
+        # Генерация основы results_by_step
+        players_ids = list(map(lambda x: x.user.id, self.game.players))
+        self.results_by_step = dict.fromkeys(players_ids, [0])
+
+        self.contracts = sort_contarcts_for_players(
+            create_contracts(self.game.auction.actual_lots),
+            self.game.players
+        )
+        #self.counterDown.start()
 
     def close_state(self):
         '''
@@ -36,3 +50,9 @@ class Emulation:
          self.game.state(EMULATION):
             self.game.next_state()
         return not self.game.state(EMULATION)
+
+    def make_step(self):
+        '''
+        Method for making of step
+        '''
+        # players_ids = list(map(lambda x: x.user.id, self.game.players))
