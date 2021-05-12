@@ -94,6 +94,8 @@ def game_req(userSession):
         return redirect(url_for('game_preparing_req'))
     if game.state(AUCTION):
         return redirect(url_for('game_auction_req'))
+    if game.state(EMULATION):
+        return redirect(url_for('game_emulation_req'))
     return "NONE_STATE (Мы пока не знаем, как так получилось)"
 
 
@@ -170,9 +172,26 @@ def game_auction_req(userSession):
     resp.set_cookie('user_id', str(userSession.user.id),)
     resp.set_cookie('user_name', str(userSession.user.name))
     resp.set_cookie('cur_lot_id', str(game.auction.cur_lot.id), path='/game/auction')
-    print(game.auction.cur_lot.id)
 
     return resp
+
+@app.route('/game/emulation')
+@check_token
+@check_user_added_to_game
+@check_state(EMULATION)
+def game_emulation_req(userSession):
+    '''
+    Functin for request "/game/emulation"
+    '''
+    game.emulation.start()
+    param = {
+        'user': userSession.user,
+        'cur_result': game.emulation.cur_result
+    }
+    resp = make_response(render_template('emulation_template.html', **param))
+    
+    return resp
+
 
 @app.route('/authorization')
 def authorization_req():

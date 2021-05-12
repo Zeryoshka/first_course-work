@@ -1,6 +1,7 @@
 from .states_module.waiting_for_player import Waiting_for_player
 from .states_module.preparing_for_game import Preparing_for_game
 from .states_module.auction_module.auction import Auction
+from .states_module.emulation_module.emulation import Emulation
 from .players import Players
 from app.config_module.base_config import NONE_STATE, WAITING_FOR_PLAYER, PREPARING_FOR_GAME, \
     AUCTION, EMULATION, RESULTS
@@ -22,6 +23,7 @@ class Game():
         self.waiting_for_player = Waiting_for_player(self)
         self.preparing_for_game = Preparing_for_game(self)
         self.auction = Auction(self)
+        self.emulation = Emulation(self)
         self._lots_file = LOTS_FILE
         self._weathercast_file = WEATHERCAST_FILE
 
