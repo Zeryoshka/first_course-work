@@ -41,33 +41,45 @@ body {
     height: 90vh;
     align-items: center;
     box-sizing: border-box;
+    color: white;
 }
 
 .content__block {
+    display: flex;
     width: 50%;
     background-color: rgba(50, 50, 50, 0.5);
-    height: 300px;
     margin: auto;
     padding: 1rem 1.5rem;
     box-sizing: border-box;
     border-radius: 1rem;
-}
-
-.content__column {
-    box-sizing: border-box;
-    display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
-    height: 90vh;
-    margin: 0;
-    width: 50%;
-    padding: 0 .5em;
 }
 
-.graph-block {
-    border-radius: 1.2em;
+.main-data__line {
     display: flex;
-    height: 45%;
-    background-color: rgba(50, 50, 50, 0.5);
-    padding: 0.5em;
+    flex-direction: row;
+    width: 100%;
+    justify-content: center;
+    margin-bottom: 0.5em;
+}
+
+.main-data__steps-block {
+    border: white solid 1.5px;
+    font-size: 1.3rem;
+    padding: 0.3rem 0.6rem;
+    border-radius: 0.4rem;
+}
+
+.main-data__my-result {
+    display: flex;
+    flex-direction: row;
+    font-size: 1.3rem;
+}
+
+.my-result__name, .my-result__money {
+    display: flex;
+}
+
+.my-result__name {
+    margin-right: 0.4em;
 }
