@@ -55,4 +55,8 @@ class Emulation:
         '''
         Method for making of step
         '''
-        # players_ids = list(map(lambda x: x.user.id, self.game.players))
+        for player in self.game.players:
+            new_result = self.contracts[player.user.id]
+            self.results_by_step[player.user.id].append(new_result)
+
+    
