@@ -8,7 +8,7 @@ class Contract:
         '''
         Инициализация contract'a
         '''
-        assert !lot.is_purchased 'illegal Contract'
+        assert (not lot.is_purchased), 'illegal Contract'
         self.id = lot.id
         self.name = lot.name
         self.contract_type = lot.type
