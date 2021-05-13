@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{url_for('static', filename='emulation-page/emulation-style.css.css')}}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <title>Power Market</title>
+</head>
+<body>
+    <div class="header">
+        <h1 class="header__text">Эмуляция ({{user.name}})</h1>
+    </div>
+    <div class="content">
+        <div class="content__block main-data">
+            <div class="main-data__line">
+                <div class="main-data__steps-block">
+                    <span id="cur_step">{{cur_step}}</span>
+                    /
+                    <span id="steps_count">{{count_steps}}</span>
+                </div>
+            </div>
+            <div class="main-data__line">
+                <div class="main-data__my-result">
+                    <p class="my-result__name">{{user.name}}:</p>
+                    <p class="my-result__money" >{{results[user.id]}}</p>
+                </div>
+            </div>
+            <div class="main-data__line">
+                <div class="main-data__other-results">
+                    {% for i, [name, money] in zip(range(len(results)), results.values()) %}
+                        <div class="other-result__item user-result">
+                            <div class="user-result__num">{{i}})</div>
+                            <div class="user-result__name">{{name}}</div>
+                            <div class="user-result__money">{{money}}</div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
