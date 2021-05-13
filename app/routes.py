@@ -135,18 +135,6 @@ def game_preparing_req(userSession):
     }
     return render_template('preparing-for-game_template.html', **param)
 
-# Заглушка, пока Илья не сделает
-class Lot:
-    def __init__(self, mini, maxi, name, id, who_bought, is_current, purchase_cost):
-        self.max_cost = maxi
-        self.min_cost = mini
-        self.who_bought = who_bought
-        self.name = name
-        self.id = id
-        self.is_current = is_current
-        self.purchase_cost = purchase_cost
-
-
 
 @app.route('/game/auction')
 @check_token
