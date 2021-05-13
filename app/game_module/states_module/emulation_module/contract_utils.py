@@ -6,7 +6,7 @@ def create_contracts(lots):
     '''
     contracts = []
     for lot in lots:
-        if not lot.is_purchased:
+        if lot.is_purchased:
             contracts.append(Contract(lot))
     return contracts
 

@@ -16,6 +16,7 @@ class Emulation:
         '''
         self.game = game
         self.cur_step = 0
+        self.steps_count = EMULATION_STEPS_COUNT
         self.is_started = False
         self.contracts = dict()
         self.results_by_step = dict()

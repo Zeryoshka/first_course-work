@@ -174,12 +174,15 @@ def game_emulation_req(userSession):
     game.emulation.start()
     cur_result = game.emulation.cur_result
     list_of_result = sorted(cur_result.items(), key=lambda item: item[1], reverse=True)
+    list_of_result = list(map(lambda x: (users.getUserById(x[0]).name, x[1]), list_of_result))
     param = {
+        'cur_step': game.emulation.cur_step,
+        'count_steps': game.emulation.steps_count,
         'user': userSession.user,
         'my_result': game.emulation.cur_result[userSession.user.id],
-        'results': list_of_result,
+        'results': zip(range(len(list_of_result)), list_of_result),
     }
-    resp = make_response(render_template('emulation_template.html', **param))
+    resp = make_response(render_template('emulation-page_template.html', **param))
     
     return resp
 

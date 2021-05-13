@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{{url_for('static', filename='emulation-page/emulation-style.css.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='emulation-page/emulation-style.css')}}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <title>Power Market</title>
 </head>
@@ -30,9 +30,9 @@
             </div>
             <div class="main-data__line">
                 <div class="main-data__other-results">
-                    {% for i, (name, money) in zip(range(len(list_of_result)), list_of_result) %}
+                    {% for i, (name, money) in results %}
                         <div class="other-result__item user-result">
-                            <div class="user-result__num">{{i}})</div>
+                            <div class="user-result__num">{{i+1}})</div>
                             <div class="user-result__name">{{name}}</div>
                             <div class="user-result__money">{{money}}</div>
                         </div>
