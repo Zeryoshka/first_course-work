@@ -25,12 +25,12 @@
             <div class="main-data__line">
                 <div class="main-data__my-result">
                     <p class="my-result__name">{{user.name}}:</p>
-                    <p class="my-result__money" >{{results[user.id]}}</p>
+                    <p class="my-result__money" >{{my_result}}</p>
                 </div>
             </div>
             <div class="main-data__line">
                 <div class="main-data__other-results">
-                    {% for i, [name, money] in zip(range(len(results)), results.values()) %}
+                    {% for i, (name, money) in zip(range(len(list_of_result)), list_of_result) %}
                         <div class="other-result__item user-result">
                             <div class="user-result__num">{{i}})</div>
                             <div class="user-result__name">{{name}}</div>

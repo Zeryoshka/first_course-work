@@ -172,9 +172,12 @@ def game_emulation_req(userSession):
     Functin for request "/game/emulation"
     '''
     game.emulation.start()
+    cur_result = game.emulation.cur_result
+    list_of_result = sorted(cur_result.items(), key=lambda item: item[1], reverse=True)
     param = {
         'user': userSession.user,
-        'cur_result': game.emulation.cur_result
+        'my_result': game.emulation.cur_result[userSession.user.id],
+        'results': list_of_result,
     }
     resp = make_response(render_template('emulation_template.html', **param))
     

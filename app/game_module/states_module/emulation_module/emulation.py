@@ -59,4 +59,9 @@ class Emulation:
             new_result = self.contracts[player.user.id]
             self.results_by_step[player.user.id].append(new_result)
 
-    
+    @property
+    def cur_result(self):
+        ans = dict()
+        for key, value in self.results_by_step.items():
+            ans[key] = value[-1]
+        return ans
