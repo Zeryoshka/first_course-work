@@ -186,6 +186,7 @@ def game_emulation_req(userSession):
     resp = make_response(render_template('emulation-page_template.html', **param))
     resp.set_cookie('user_id', str(userSession.user.id))
     resp.set_cookie('user_name', str(userSession.user.name))
+    resp.set_cookie('left_time', str(game.emulation.steps_timer.left_time_befor_new_step.microseconds/1000))
     return resp
 
 
@@ -237,7 +238,8 @@ def api_update_result(userSession):
         'cur_step': game.emulation.cur_step,
         'steps_count': game.emulation.steps_count,
         'my_result': cur_result[userSession.user.id],
-        'cur_result': list_of_result
+        'cur_result': list_of_result,
+        'left_time': game.emulation.steps_timer.left_time_befor_new_step.microseconds / 1000
     }
     return jsonify(resp)
 
