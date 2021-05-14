@@ -40,6 +40,8 @@ class CounterDown:
     def time_from_start(self):
         if self.started:
             return timedelta(0)
+        if self.finished:
+            return self._time_len
         return datetime.now() - self._start_time
     
     def clear(self):
