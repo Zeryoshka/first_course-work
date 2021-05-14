@@ -5,13 +5,6 @@ from .lot import Lot
 from app.game_module.counter_down import CounterDown
 import csv
 
-# Метод start для ацкциона, чтобы начинать
-# Иметь метод close_state для перехода game к следующему состоянию
-# Иметь возможность розыгргыша лота, возможность начать его продавать
-# А обратный отсчет где? (Там для этог есть класс)
-# А как ставку сдлеать?
-# А где render_param, чтобы параметры для страничек делать?
-
 
 class Auction:
     def __init__(self, game):
