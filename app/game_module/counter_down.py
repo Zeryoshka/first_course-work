@@ -32,9 +32,15 @@ class CounterDown:
 
     @property
     def left_time(self):
-        if datetime.now() - self._start_time < self._time_len:
+        if self.started and datetime.now() - self._start_time < self._time_len:
             return self._time_len - (datetime.now() - self._start_time)
         return timedelta(0)
+
+    @property
+    def time_from_start(self):
+        if self.started:
+            return timedelta(0)
+        return datetime.now() - self._start_time
     
     def clear(self):
         self._time_len = self._remember_time_len
