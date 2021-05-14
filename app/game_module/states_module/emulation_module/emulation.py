@@ -1,3 +1,5 @@
+import csv
+
 from .emulation_timer import Emulation_timer
 from .contract_utils import create_contracts
 from .contract_utils import sort_contarcts_for_players
@@ -5,6 +7,9 @@ from .contract_utils import sort_contarcts_for_players
 from app.config_module.base_config import EMULATION
 from app.config_module.base_config import EMULATION_STEPS_COUNT
 from app.config_module.base_config import EMULATION_STEP__TIME
+from app.config_module.base_config import WEATHERCAST_FILE_IN_EMULATION
+from app.config_module.base_config import PRICE_SELL_KVT
+from app.config_module.base_config import PRICE_BUY_KVT
 
 class Emulation:
     '''
@@ -22,6 +27,7 @@ class Emulation:
         self.is_started = False
         self.contracts = dict()
         self.results_by_step = dict()
+        self.weather_value = _read_of_weather_value()
         self.steps_timer = Emulation_timer(self.step_time, self.steps_count)
 
     def start(self):
@@ -71,9 +77,23 @@ class Emulation:
         Method for making of step
         '''
         print('it makes step')
-        # for player in self.game.players:
-        # new_result = self.contracts[player.user.id]
-        # self.results_by_step[player.user.id].append(new_result)
+        for player in self.game.players:
+            player_contracts = self.contracts[player.user.id]
+            value_for_cur_step = self.weather_value[self.cur_step - 1]
+            
+            kvt, new_result = 0, 0
+            for contract in player_contracts:
+                need_kvt, money = contract.get_delta_result(value_for_cur_step)
+                new_result += money
+                kvt += need_kvt
+            if kvt > 0:
+                new_result += kvt * PRICE_SELL_KVT
+            else:
+                new_result += kvt * PRICE_BUY_KVT
+
+            last_res = self.results_by_step[player.user.id][-1]
+            self.results_by_step[player.user.id].append(new_result + last_res)
+
 
     @property
     def cur_result(self):
@@ -84,3 +104,12 @@ class Emulation:
         for key, value in self.results_by_step.items():
             ans[key] = value[-1]
         return ans
+
+def _read_of_weather_value():
+    csv_name = WEATHERCAST_FILE_IN_EMULATION
+    with open(csv_name, encoding='utf-8') as csv_file:
+        tmp = csv.DictReader(csv_file)
+        values = []
+        for row in tmp:
+            values.append(row)
+    return values

@@ -35,7 +35,7 @@ class Auction:
         '''
         парсинг из csv в список и предварительная обработка лотов
         '''
-        csv_name = LOTS_FILE_IN_AUCTION  # TODO: Убери в конфиги, не позорься!!!
+        csv_name = LOTS_FILE_IN_AUCTION
         with open(csv_name, encoding='utf-8') as csv_file:
             tmp = csv.DictReader(csv_file)
             for row in tmp:
