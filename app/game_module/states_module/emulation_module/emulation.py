@@ -1,9 +1,10 @@
-# from app.game_module.counter_down import CounterDown
+from .emulation_timer import Emulation_timer
 from .contract_utils import create_contracts
 from .contract_utils import sort_contarcts_for_players
 
 from app.config_module.base_config import EMULATION
 from app.config_module.base_config import EMULATION_STEPS_COUNT
+from app.config_module.base_config import EMULATION_STEP__TIME
 
 class Emulation:
     '''
@@ -16,18 +17,20 @@ class Emulation:
         '''
         self.game = game
         self.cur_step = 0
+        self.step_time = EMULATION_STEP__TIME
         self.steps_count = EMULATION_STEPS_COUNT
         self.is_started = False
         self.contracts = dict()
         self.results_by_step = dict()
-        # self.counterDown = CounterDown()
+        self.steps_timer = Emulation_timer(self.step_time, self.steps_count)
 
     def start(self):
         '''
         Method for start current state,
         '''
-        if self.is_started and \
-         self.game.state(EMULATION):
+        if not self.game.state(EMULATION):
+            return
+        if self.is_started:
             return
             
         self.is_started = True
@@ -41,7 +44,9 @@ class Emulation:
             create_contracts(self.game.auction.actual_lots),
             self.game.players
         )
-        #self.counterDown.start()
+
+        self.steps_timer.start()
+
 
     def close_state(self):
         '''
@@ -52,16 +57,29 @@ class Emulation:
             self.game.next_state()
         return not self.game.state(EMULATION)
 
+    def check_and_change_step(self):
+        '''
+        Method for check and change step in Emulation object
+        '''
+        real_cur_step = self.steps_timer.real_step
+        while real_cur_step > self.cur_step:
+            self.cur_step += 1
+            self.make_step()
+
     def make_step(self):
         '''
         Method for making of step
         '''
-        for player in self.game.players:
-            new_result = self.contracts[player.user.id]
-            self.results_by_step[player.user.id].append(new_result)
+        print('it makes step')
+        # for player in self.game.players:
+        # new_result = self.contracts[player.user.id]
+        # self.results_by_step[player.user.id].append(new_result)
 
     @property
     def cur_result(self):
+        '''
+        Current result of emulation in game
+        '''
         ans = dict()
         for key, value in self.results_by_step.items():
             ans[key] = value[-1]

@@ -172,6 +172,7 @@ def game_emulation_req(userSession):
     Functin for request "/game/emulation"
     '''
     game.emulation.start()
+    game.emulation.check_and_change_step()
     cur_result = game.emulation.cur_result
     list_of_result = sorted(cur_result.items(), key=lambda item: item[1], reverse=True)
     list_of_result = list(map(lambda x: (users.getUserById(x[0]).name, x[1]), list_of_result))
