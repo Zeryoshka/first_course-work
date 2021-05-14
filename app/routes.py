@@ -157,7 +157,7 @@ def game_auction_req(userSession):
 
     resp = make_response(render_template('auction_template.html', **param))
     resp.set_cookie('left_time', str(game.auction.bid_counter_down.left_time.seconds), 100)
-    resp.set_cookie('user_id', str(userSession.user.id),)
+    resp.set_cookie('user_id', str(userSession.user.id))
     resp.set_cookie('user_name', str(userSession.user.name))
     resp.set_cookie('cur_lot_id', str(game.auction.cur_lot.id), path='/game/auction')
 
@@ -180,11 +180,12 @@ def game_emulation_req(userSession):
         'cur_step': game.emulation.cur_step,
         'count_steps': game.emulation.steps_count,
         'user': userSession.user,
-        'my_result': game.emulation.cur_result[userSession.user.id],
+        'my_result': cur_result[userSession.user.id],
         'results': zip(range(len(list_of_result)), list_of_result),
     }
     resp = make_response(render_template('emulation-page_template.html', **param))
-    
+    resp.set_cookie('user_id', str(userSession.user.id))
+    resp.set_cookie('user_name', str(userSession.user.name))
     return resp
 
 
@@ -216,6 +217,27 @@ def api_make_bid_req(userSession):
     resp = {
         'is_successful': is_successful,
         'message': message
+    }
+    return jsonify(resp)
+
+@app.route('/game/api/update_result')
+@check_token
+@check_user_added_to_game
+@check_state(EMULATION)
+def api_update_result(userSession):
+    '''
+    Function for getting current_results
+    '''
+    game.emulation.start()
+    game.emulation.check_and_change_step()
+    cur_result = game.emulation.cur_result
+    list_of_result = sorted(cur_result.items(), key=lambda item: item[1], reverse=True)
+    list_of_result = list(map(lambda x: (users.getUserById(x[0]).name, x[1]), list_of_result))
+    resp = {
+        'cur_step': game.emulation.cur_step,
+        'steps_count': game.emulation.steps_count,
+        'my_result': cur_result[userSession.user.id],
+        'cur_result': list_of_result
     }
     return jsonify(resp)
 
