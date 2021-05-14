@@ -38,7 +38,7 @@ class CounterDown:
 
     @property
     def time_from_start(self):
-        if self.started:
+        if not self.started:
             return timedelta(0)
         if self.finished:
             return self._time_len

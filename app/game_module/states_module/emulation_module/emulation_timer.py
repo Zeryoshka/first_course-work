@@ -24,4 +24,7 @@ class Emulation_timer(CounterDown):
 
     @property
     def left_time_befor_new_step(self):
+        '''
+        Left time befor new step will start
+        '''
         return (self.real_step + 1) * self.step_time_len - self.time_from_start
