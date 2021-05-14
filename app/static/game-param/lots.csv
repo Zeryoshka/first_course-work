@@ -4,3 +4,7 @@ lot_id,lot_name,lot_type,auction_type,min_cost,max_cost
 3,СЭС,producer,english,1,100
 4,ВЭС,producer,english,1,100
 5,Дом,consumer,dutch,1,10
+6,ВЭС,producer,english,1,100
+7,Завод,consumer,dutch,1,10
+8,Дом,consumer,dutch,1,10
+9,Больница,consumer,1,10
