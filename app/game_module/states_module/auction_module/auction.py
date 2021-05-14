@@ -1,4 +1,4 @@
-from app.config_module.base_config import AUCTION
+from app.config_module.base_config import AUCTION, LOTS_FILE_IN_AUCTION
 from app.config_module.base_config import BID__TIME
 
 from .lot import Lot
@@ -35,15 +35,11 @@ class Auction:
         '''
         парсинг из csv в список и предварительная обработка лотов
         '''
-        csv_name = 'app/static/game-param/lots.csv'  # TODO: Убери в конфиги, не позорься!!!
+        csv_name = LOTS_FILE_IN_AUCTION  # TODO: Убери в конфиги, не позорься!!!
         with open(csv_name, encoding='utf-8') as csv_file:
             tmp = csv.DictReader(csv_file)
             for row in tmp:
                 self.actual_lots.append(Lot(self.game.players,**row))
-                # А еще надо проверить тип аукциона, это же тоже строка!!
-                # Еще все параметры, кроме разве что name
-                # И преобразовать cost и всякое такое к числам
-                # Можешь отдельный модуль конфигов пределать к текущему пакету конфигов, чтобы был чисто для аукциона
 
     def export_data(self): 
         '''

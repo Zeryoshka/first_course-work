@@ -32,6 +32,7 @@ TEMPLATE_FOLDER = 'templates'
 
 # Файлы
 LOTS_FILE = 'game-param/lots.csv'
+LOTS_FILE_IN_AUCTION = 'app/static/game-param/lots.csv'
 WEATHERCAST_FILE = 'game-param/weather.csv'
 
 
